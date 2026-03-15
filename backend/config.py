@@ -1,0 +1,3 @@
+MONGO_URI = "mongodb://localhost:27017/mvc_auth"
+JWT_SECRET = "N3DF4-XHT6C-WKGQ2-PT4CJ-4VVYP"
+JWT_ALGORITHM = "HS256"

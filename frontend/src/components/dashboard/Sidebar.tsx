@@ -1,0 +1,185 @@
+import React, { useState } from "react";
+import {
+  MagnifyingGlass,
+  House,
+  SquaresFour,
+  FolderPlus,
+  CheckSquare,
+  Gear,
+  User,
+  IdentificationCard,
+  LockSimple,
+  PuzzlePiece,
+  CreditCard,
+  ChatCircle,
+  Bell,
+  Lifebuoy,
+  Plus,
+  Minus,
+  SignOut
+} from "phosphor-react";
+import "./Sidebar.css";
+import { logout } from "../../features/auth/authSlice";
+import { useAppDispatch } from "../../hooks";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+
+
+interface SidebarProps {
+  setActiveContent: (content: string) => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ setActiveContent }) => {
+  const [expandedSection, setExpandedSection] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
+  const [activeTab, setActiveTab] = useState<string>("Home");
+  const toggleSection = (section: string) => {
+    setExpandedSection(expandedSection === section ? null : section);
+  };
+  const navigator = useNavigate()
+
+  const handleTabClick = (tab: string) => {
+    setActiveTab(tab);
+    setActiveContent(tab);
+  };
+  const handleLogout = () => {
+    // Clear Redux auth state
+    dispatch(logout());
+
+    // Clear cookies
+    Cookies.remove("authToken");   // remove specific cookie
+    Cookies.remove("refreshToken"); // if you use refresh tokens
+
+    // Clear all localStorage data
+    localStorage.clear();
+
+    // Clear sessionStorage if you use it
+    sessionStorage.clear();
+
+    // Optional: reset UI state
+    setActiveContent("Home");
+
+    // Redirect to home/login
+    navigator("/");
+  };
+
+
+
+  return (
+    <aside className="sidebar">
+      {/* Logo */}
+      <div className="sidebar-header">
+        <div className="logo">Monthly Expenses ▼</div>
+      </div>
+
+      {/* Search */}
+      <div className="search-bar">
+        <MagnifyingGlass size={16} />
+        <input type="text" placeholder="Search..." />
+      </div>
+
+      {/* Menu */}
+      <nav className="menu">
+        <div className={`menu-item ${activeTab === "Home" ? "active" : ""}`} onClick={() => handleTabClick("Home")}>
+          <div className="menu-left">
+            <House size={20} />
+            <span>Home</span>
+          </div>
+        </div>
+
+        {/* Dashboard */}
+        <div className={`menu-item ${activeTab === "Dashboard" ? "active" : ""}`} onClick={() => toggleSection("Dashboard")}>
+          <div className="menu-left">
+            <SquaresFour size={20} />
+            <span>Dashboard</span>
+          </div>
+          <div className="menu-right">
+            {expandedSection === "Dashboard" ? (
+              <Minus size={18} weight="bold" />
+            ) : (
+              <Plus size={18} weight="bold" />
+            )}
+          </div>
+        </div>
+        {expandedSection === "Dashboard" && (
+          <div className="submenu">
+            <div className={`submenu-item ${activeTab === "EnterExpenses" ? "active" : ""}`} onClick={() => handleTabClick("EnterExpenses")}>
+              Enter Expenses
+            </div>
+            <div className={`submenu-item ${activeTab === "ViewMonthly" ? "active" : ""}`} onClick={() => handleTabClick("ViewMonthly")}>
+              View Monthly Yearly Expenses
+            </div>
+            <div className={`submenu-item ${activeTab === "ReportGenerate" ? "active" : ""}`} onClick={() => handleTabClick("ReportGenerate")}>
+              Report Generate
+            </div>
+          </div>
+        )}
+
+        {/* Projects */}
+        <div className={`menu-item ${activeTab === "Projects" ? "active" : ""}`} onClick={() => handleTabClick("Projects")}>
+          <div className="menu-left">
+            <FolderPlus size={20} />
+            <span>Projects</span>
+          </div>
+        </div>
+
+        {/* Tasks */}
+        <div className={`menu-item ${activeTab === "Tasks" ? "active" : ""}`} onClick={() => handleTabClick("Tasks")}>
+          <div className="menu-left">
+            <CheckSquare size={20} />
+            <span>Tasks</span>
+          </div>
+        </div>
+
+        {/* Settings */}
+        <div className="menu-item" onClick={() => toggleSection("Settings")}>
+          <div className="menu-left">
+            <Gear size={20} />
+            <span>Settings</span>
+          </div>
+          <div className="menu-right">
+            {expandedSection === "Settings" ? (
+              <Minus size={18} weight="bold" />
+            ) : (
+              <Plus size={18} weight="bold" />
+            )}
+          </div>
+        </div>
+        {expandedSection === "Settings" && (
+          <div className="submenu">
+            <div className="submenu-item"><User size={18} /> My details</div>
+            <div className="submenu-item"><IdentificationCard size={18} /> Profile</div>
+            <div className="submenu-item"><LockSimple size={18} /> Security</div>
+            <div className="submenu-item"><PuzzlePiece size={18} /> Integrations</div>
+            <div className="submenu-item"><CreditCard size={18} /> Billing</div>
+          </div>
+        )}
+
+        <div className="menu-item" onClick={() => setActiveContent("Messages")}>
+          <div className="menu-left">
+            <ChatCircle size={20} /> Messages
+          </div>
+        </div>
+        <div className="menu-item" onClick={() => setActiveContent("Updates")}>
+          <div className="menu-left">
+            <Bell size={20} /> Updates
+          </div>
+        </div>
+        <div className="menu-item" onClick={() => setActiveContent("Support")}>
+          <div className="menu-left">
+            <Lifebuoy size={20} /> Support
+          </div>
+        </div>
+        <div className="menu-item" onClick={handleLogout}>
+          <div className="menu-left">
+            <SignOut size={20} />
+            <span>Logout</span>
+          </div>
+        </div>
+
+      </nav>
+    </aside>
+  );
+};
+
+export default Sidebar;

@@ -1,0 +1,118 @@
+.container {
+    margin: 20px auto;
+    width: 95%;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(1, 1, 1, 0.25);
+    font-family: 'Inter', sans-serif;
+    padding: 5px 15px 7px 15px;
+    border: 1px solid #2980b9;
+    background-color: #fafafa;
+    
+}
+
+.searchBar {
+    display: flex;
+    justify-content: space-between;
+    /* ✅ inputs left, total right */
+    align-items: flex-end;
+    margin-bottom: 15px;
+}
+
+.searchGroup {
+    display: flex;
+    gap: 20px;
+}
+
+.searchLabel {
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    font-weight: 700;
+    color: #13064f;
+}
+
+.totalAmount {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0668e7;
+    /* ✅ highlight in blue */
+}
+
+.searchInput {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f9f9f9;
+}
+
+.table th,
+.table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.table th {
+    background: #0668e7;
+    color: #fff;
+}
+
+.pagination {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.pageButton {
+    padding: 6px 12px;
+    border: 1px solid #0668e7;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    color: #0668e7;
+    font-weight: 500;
+}
+
+.pageButton:hover:not(:disabled) {
+    background: #0668e7;
+    color: #fff;
+}
+
+.pageButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.activePage {
+    background: #0668e7;
+    color: #fff;
+}
+
+.deleteIcon {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.deleteIcon:hover {
+    transform: scale(1.2);
+}
+
+.editIcon {
+    cursor: pointer;
+    margin-right: 10px;
+    transition: transform 0.2s ease;
+}
+
+.editIcon:hover {
+    transform: scale(1.2);
+    color: #2980b9;
+    /* darker blue on hover */
+}
