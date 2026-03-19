@@ -51,3 +51,4 @@ def reset_password(token, new_password):
     update_user_password(user["email"], hashed_pw)
     clear_reset_token(user["email"])
     return {"message": "Password reset successful"}
+

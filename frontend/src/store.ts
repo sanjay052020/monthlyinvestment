@@ -5,6 +5,7 @@ import registrationReducer from "./features/auth/registrationSlice";
 import investmentReducer from "./features/auth/addInvestmentSlice";
 import forgotPasswordReducer from "./features/auth/forgotPasswordSlice";
 import resetPasswordReducer from "./features/auth/resetPasswordSlice";
+import navbarReducer from "./features/navbar/navbarSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,7 +13,9 @@ const store = configureStore({
     registration: registrationReducer,
     investment: investmentReducer,
     forgotPassword: forgotPasswordReducer,
-    resetPassword: resetPasswordReducer
+    resetPassword: resetPasswordReducer,
+    navbar: navbarReducer,
+
   },
 });
 

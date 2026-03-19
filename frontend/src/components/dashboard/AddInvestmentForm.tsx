@@ -4,34 +4,17 @@ import styles from "./AddInvestmentForm.module.css";
 import { RootState } from "../../store";
 import { addInvestment } from "../../features/auth/addInvestmentSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import CircleLoader from "../CircleLoader";
-import Popup from "../Popup";
+import CircleLoader from "../common/CircleLoader";
+import Popup from "../common/Popup";
+import { investmentOptions } from "./investmentOptions";
 
 interface InvestmentFormData {
     amount: number;
     toInvestment: string;
     date: string;
     reason: string;
+    status: string;
 }
-
-export const investmentOptions = [
-    { value: "Society Maintenance", label: "Society Maintenance" },
-    { value: "Infrastructure", label: "Infrastructure" },
-    { value: "Utilities", label: "Utilities" },
-    { value: "Home Expanses", label: "Home Expanses" },
-    { value: "RD Expanses", label: "RD Expanses" },
-    { value: "Bike Expanses", label: "Bike Expanses" },
-    { value: "School Expanses", label: "School Expanses" },
-    { value: "PPF Expanses", label: "PPF Expanses" },
-    { value: "Wifi Expanses", label: "Wifi Expanses" },
-    { value: "Milk Expanses", label: "Milk Expanses" },
-    { value: "Mobile Recharge Expanses", label: "Mobile Recharge Expanses" },
-    { value: "Mutual Fund Expanses", label: "Mutual Fund Expanses" },
-    { value: "Stock Expanses", label: "Stock Expanses" },
-    { value: "Electricity Expanses", label: "Electricity Expanses" },
-    { value: "Credit Card Expanses", label: "Credit Card Expanses" },
-    { value: "FD Expanses", label: "FD Expanses" },
-];
 
 const AddInvestmentForm: React.FC = () => {
     const [formData, setFormData] = useState<InvestmentFormData>({
@@ -39,6 +22,7 @@ const AddInvestmentForm: React.FC = () => {
         toInvestment: "",
         date: "",
         reason: "",
+        status: 'pending'
     });
     const dispatch = useAppDispatch();
     const { loading, error, data, message } = useAppSelector((state: RootState) => state.investment);
@@ -63,8 +47,6 @@ const AddInvestmentForm: React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         dispatch(addInvestment(formData));
-
-        console.log("Investment Submitted:", formData);
     };
 
     useEffect(() => {
@@ -74,7 +56,8 @@ const AddInvestmentForm: React.FC = () => {
                 amount: 0,
                 date: "",
                 reason: '',
-                toInvestment: ""
+                toInvestment: "",
+                status: "pending"
             })
         }
     }, [message])

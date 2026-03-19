@@ -32,7 +32,7 @@ const ReportGenerator: React.FC = () => {
         const fromTime = new Date(from).getTime();
         const toTime = new Date(to).getTime();
 
-        return data.filter(item => {
+        return data.filter(item=>item.status === category).filter(item => {
             const itemDate = new Date(item.date).getTime(); // assuming each investment has a `date` field
             return itemDate >= fromTime && itemDate <= toTime;
         });
@@ -202,14 +202,13 @@ const ReportGenerator: React.FC = () => {
                         </select>
                     </div>
 
-                    {/* <div className="form-group">
-                        <label>Select Category</label>
+                    <div className="form-group">
+                        <label>Select Status</label>
                         <select value={category} onChange={(e) => setCategory(e.target.value)}>
-                            <option>Monthly</option>
-                            <option>Quarterly</option>
-                            <option>Yearly</option>
+                            <option>pending</option>
+                            <option>completed</option>
                         </select>
-                    </div> */}
+                    </div>
 
                     <div className="form-group">
                         <label>Select Format</label>

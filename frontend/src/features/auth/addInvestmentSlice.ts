@@ -9,6 +9,7 @@ export interface Investment {
     toInvestment: string;
     date: string;
     reason: string;
+    status: string;
 }
 
 
@@ -144,6 +145,9 @@ const addInvestmentSlice = createSlice({
             state.error = null;
             state.loading = false;
         },
+        clearMessage: (state) => {
+            state.message = null;
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -213,5 +217,5 @@ const addInvestmentSlice = createSlice({
     },
 });
 
-export const { resetInvestment } = addInvestmentSlice.actions;
+export const { resetInvestment, clearMessage } = addInvestmentSlice.actions;
 export default addInvestmentSlice.reducer;

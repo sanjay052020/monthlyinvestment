@@ -55,6 +55,7 @@
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",
-    "@types/react": "^19.2.14"
+    "@types/react": "^19.2.14",
+    "workbox-cli": "^7.4.0"
   }
 }

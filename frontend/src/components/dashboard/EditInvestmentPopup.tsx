@@ -2,12 +2,17 @@ import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import styles from "./EditInvestmentPopup.module.css";
 import { Investment } from "../../features/auth/addInvestmentSlice";
-import { investmentOptions } from "./AddInvestmentForm";
+import { investmentOptions } from "./investmentOptions";
 
 interface EditInvestmentPopupProps {
     investment: Investment | null;
     onClose: () => void;
     onSave: (updated: Investment) => void;
+}
+
+interface OptionType {
+  value: string;
+  label: string;
 }
 
 
@@ -22,6 +27,7 @@ const EditInvestmentPopup: React.FC<EditInvestmentPopupProps> = ({
         toInvestment: "",
         date: "",
         reason: "",
+        status: "",
     });
 
     useEffect(() => {
@@ -30,9 +36,7 @@ const EditInvestmentPopup: React.FC<EditInvestmentPopupProps> = ({
         }
     }, [investment]);
 
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
             ...prev,
@@ -44,6 +48,14 @@ const EditInvestmentPopup: React.FC<EditInvestmentPopupProps> = ({
         setFormData((prev) => ({
             ...prev,
             toInvestment: option ? option.value : "",
+        }));
+    };
+
+    // ✅ Handle status dropdown change
+    const handleStatusChange = (option: any) => {
+        setFormData((prev) => ({
+            ...prev,
+            status: option ? option.value : "",
         }));
     };
 
@@ -77,14 +89,16 @@ const EditInvestmentPopup: React.FC<EditInvestmentPopupProps> = ({
                         <label className={styles.formLabel}>To Investment:</label>
                         <Select
                             options={investmentOptions}
-                            value={investmentOptions.find((opt) => opt.value === formData.toInvestment)}
+                            value={investmentOptions.find(
+                                (opt: OptionType) => opt.value === formData.toInvestment
+                            )}
                             onChange={handleSelectChange}
                             classNamePrefix="react-select"
                             placeholder="Select..."
                             styles={{
                                 control: (base) => ({
                                     ...base,
-                                    width: "104%",          // match input width
+                                    width: "106%",          // match input width
                                     minHeight: "42px",
                                     borderRadius: "6px",
                                     borderColor: "#ccc",
@@ -110,10 +124,12 @@ const EditInvestmentPopup: React.FC<EditInvestmentPopupProps> = ({
                                 }),
                                 menu: (base) => ({
                                     ...base,
-                                    width: "104%",          // dropdown menu same width
+                                    width: "106%",          // dropdown menu same width
                                 }),
                             }}
-                        /></div>
+                        />
+                    </div>
+
                     <div className={styles.formGroup}>
                         <label className={styles.formLabel}>
                             Date:
@@ -122,10 +138,10 @@ const EditInvestmentPopup: React.FC<EditInvestmentPopupProps> = ({
                                 name="date"
                                 value={formData.date}
                                 onChange={handleChange}
-                                required
                             />
                         </label>
                     </div>
+
                     <div className={styles.formGroup}>
                         <label className={styles.formLabel}>
                             Reason:
@@ -134,10 +150,61 @@ const EditInvestmentPopup: React.FC<EditInvestmentPopupProps> = ({
                                 name="reason"
                                 value={formData.reason}
                                 onChange={handleChange}
-                                required
                             />
                         </label>
                     </div>
+
+                    {/* ✅ New Status Dropdown */}
+                    <div className={styles.formGroup}>
+                        <label className={styles.formLabel}>Status:</label>
+                        <Select
+                            options={[
+                                { value: "pending", label: "Pending" },
+                                { value: "completed", label: "Completed" },
+                            ]}
+                            value={
+                                formData.status
+                                    ? { value: formData.status, label: formData.status }
+                                    : null
+                            }
+                            onChange={handleStatusChange}
+                            classNamePrefix="react-select"
+                            placeholder="Select status..."
+                            styles={{
+                                control: (base) => ({
+                                    ...base,
+                                    width: "106%",          // match input width
+                                    minHeight: "42px",
+                                    borderRadius: "6px",
+                                    borderColor: "#ccc",
+                                    backgroundColor: "#f9f9f9",
+                                    boxShadow: "none",
+                                    "&:hover": { borderColor: "#0668e7" },
+                                }),
+                                singleValue: (base) => ({
+                                    ...base,
+                                    textAlign: "left",      // selected value left aligned
+                                    color: "#333",
+                                }),
+                                placeholder: (base) => ({
+                                    ...base,
+                                    textAlign: "left",      // placeholder left aligned
+                                    color: "#888",          // softer placeholder color
+                                }),
+                                option: (base) => ({
+                                    ...base,
+                                    textAlign: "left",      // dropdown options left aligned
+                                    paddingLeft: "0.75rem",
+                                    fontSize: "0.95rem",
+                                }),
+                                menu: (base) => ({
+                                    ...base,
+                                    width: "106%",          // dropdown menu same width
+                                }),
+                            }}
+                        />
+                    </div>
+
                     <div className={styles.actions}>
                         <button type="submit">Save</button>
                         <button type="button" onClick={onClose}>

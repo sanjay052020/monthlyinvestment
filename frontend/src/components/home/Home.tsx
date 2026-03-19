@@ -13,7 +13,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { RootState } from "../../store";
 import { fetchAllInvestments } from "../../features/auth/addInvestmentSlice";
-import CircleLoader from "../CircleLoader";
+import CircleLoader from "../common/CircleLoader";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 

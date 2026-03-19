@@ -23,6 +23,7 @@ import { logout } from "../../features/auth/authSlice";
 import { useAppDispatch } from "../../hooks";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { handleLogoutCommon } from "../../utils/logoutHelper";
 
 
 interface SidebarProps {
@@ -43,24 +44,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveContent }) => {
     setActiveContent(tab);
   };
   const handleLogout = () => {
-    // Clear Redux auth state
-    dispatch(logout());
-
-    // Clear cookies
-    Cookies.remove("authToken");   // remove specific cookie
-    Cookies.remove("refreshToken"); // if you use refresh tokens
-
-    // Clear all localStorage data
-    localStorage.clear();
-
-    // Clear sessionStorage if you use it
-    sessionStorage.clear();
-
-    // Optional: reset UI state
-    setActiveContent("Home");
-
-    // Redirect to home/login
-    navigator("/");
+    handleLogoutCommon(dispatch, navigator, setActiveContent);
   };
 
 
@@ -73,10 +57,10 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveContent }) => {
       </div>
 
       {/* Search */}
-      <div className="search-bar">
+      {/* <div className="search-bar">
         <MagnifyingGlass size={16} />
         <input type="text" placeholder="Search..." />
-      </div>
+      </div> */}
 
       {/* Menu */}
       <nav className="menu">
@@ -103,11 +87,14 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveContent }) => {
         </div>
         {expandedSection === "Dashboard" && (
           <div className="submenu">
+            <div className={`submenu-item ${activeTab === "todo" ? "active" : ""}`} onClick={() => handleTabClick("todo")}>
+              Todo List
+            </div>
             <div className={`submenu-item ${activeTab === "EnterExpenses" ? "active" : ""}`} onClick={() => handleTabClick("EnterExpenses")}>
-              Enter Expenses
+              Enter Investment Expenses
             </div>
             <div className={`submenu-item ${activeTab === "ViewMonthly" ? "active" : ""}`} onClick={() => handleTabClick("ViewMonthly")}>
-              View Monthly Yearly Expenses
+              View Expenses
             </div>
             <div className={`submenu-item ${activeTab === "ReportGenerate" ? "active" : ""}`} onClick={() => handleTabClick("ReportGenerate")}>
               Report Generate

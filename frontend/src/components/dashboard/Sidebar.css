@@ -87,10 +87,10 @@
 .submenu-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-  color: #ddd;
-  padding: 0.3rem 0;
+  gap: 1rem;
+  font-size: 1rem;
+  color: white;
+  padding: 10px 0px 5px 18px ;
   cursor: pointer;
 }
 
@@ -100,7 +100,7 @@
 }
 .submenu-item:hover {
   background: rgba(255, 255, 255, 0.1);
-  padding: 10px;
+  padding: 10px 0px 5px 18px ;
   border-radius: 5px;
 }
 

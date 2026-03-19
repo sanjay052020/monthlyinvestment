@@ -1,0 +1,18 @@
+export const investmentOptions = [
+    { value: "Society Maintenance", label: "Society Maintenance" },
+    { value: "Infrastructure", label: "Infrastructure" },
+    { value: "Utilities", label: "Utilities" },
+    { value: "Home Expanses", label: "Home Expanses" },
+    { value: "RD Expanses", label: "RD Expanses" },
+    { value: "Bike Expanses", label: "Bike Expanses" },
+    { value: "School Expanses", label: "School Expanses" },
+    { value: "PPF Expanses", label: "PPF Expanses" },
+    { value: "Wifi Expanses", label: "Wifi Expanses" },
+    { value: "Milk Expanses", label: "Milk Expanses" },
+    { value: "Mobile Recharge Expanses", label: "Mobile Recharge Expanses" },
+    { value: "Mutual Fund Expanses", label: "Mutual Fund Expanses" },
+    { value: "Stock Expanses", label: "Stock Expanses" },
+    { value: "Electricity Expanses", label: "Electricity Expanses" },
+    { value: "Credit Card Expanses", label: "Credit Card Expanses" },
+    { value: "FD Expanses", label: "FD Expanses" },
+];
