@@ -6,6 +6,7 @@ import { fetchAllInvestments } from "../../features/auth/addInvestmentSlice";
 import jsPDF from "jspdf";
 import * as XLSX from "xlsx";
 import autoTable from "jspdf-autotable";
+import CircleLoader from "../common/CircleLoader";
 
 
 
@@ -21,11 +22,19 @@ const ReportGenerator: React.FC = () => {
     const [status, setStatus] = useState<Status>("form");
 
     const dispatch = useAppDispatch();
-    const { list, loading, message, error } = useAppSelector((state: RootState) => state.investment);
+    const { list, loading, error } = useAppSelector((state: RootState) => state.investment);
 
     useEffect(() => {
         dispatch(fetchAllInvestments());
     }, [dispatch]);
+
+    if(loading){
+        return <CircleLoader />
+    }
+
+    if(error){
+        return <div color="red">Error...</div>
+    }
 
     // Utility function to filter by date range
     const filterByDateRange = (data: any[], from: string, to: string) => {

@@ -7,7 +7,7 @@ import { loginUser } from "../features/auth/authSlice";
 import Popup from "./Popup";
 import Cookies from "js-cookie";
 import CircleLoader from "./CircleLoader";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ForgotPasswordPopup from "./ForgotPasswordPopup";
 import ResetPasswordPopup from "./ResetPasswordPopup";
 
@@ -140,8 +140,8 @@ const SignInForm: React.FC = () => {
             />
             Keep me logged in
           </label>
-          <a
-            href="#"
+          <Link
+            to="/"
             className="forgot-link"
             onClick={(e) => {
               e.preventDefault();
@@ -149,7 +149,7 @@ const SignInForm: React.FC = () => {
             }}
           >
             Forgot password?
-          </a>
+          </Link>
         </div>
 
         {/* Forgot Password Popup */}

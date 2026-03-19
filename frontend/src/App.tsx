@@ -4,7 +4,6 @@ import './App.css';
 import LoginPage from './components/auth/LoginPage';
 import Dashboard from './components/dashboard/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
-import Home from './components/home/Home';
 
 function App() {
   return (

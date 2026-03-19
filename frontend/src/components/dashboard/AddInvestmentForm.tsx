@@ -25,7 +25,7 @@ const AddInvestmentForm: React.FC = () => {
         status: 'pending'
     });
     const dispatch = useAppDispatch();
-    const { loading, error, data, message } = useAppSelector((state: RootState) => state.investment);
+    const { loading, message } = useAppSelector((state: RootState) => state.investment);
     const [showPopup, setShowPopup] = useState(false);
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

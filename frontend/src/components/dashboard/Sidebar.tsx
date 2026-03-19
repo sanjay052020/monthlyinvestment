@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  MagnifyingGlass,
   House,
   SquaresFour,
   FolderPlus,
@@ -19,10 +18,8 @@ import {
   SignOut
 } from "phosphor-react";
 import "./Sidebar.css";
-import { logout } from "../../features/auth/authSlice";
 import { useAppDispatch } from "../../hooks";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import { handleLogoutCommon } from "../../utils/logoutHelper";
 
 
