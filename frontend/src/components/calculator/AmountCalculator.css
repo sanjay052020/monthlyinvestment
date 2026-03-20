@@ -37,14 +37,14 @@
   margin-bottom: 15px;
 }
 
-input[type="text"],
-input[type="number"] {
+.amt-login-input {
   flex: 1;
   padding: 8px;
   border: 1px solid #97f0b8;
   border-radius: 6px;
   box-shadow: 10px 10px 20px rgba(1,1,1,0.15);
 }
+
 
 .icon-btn {
   background-color: #0078d7;

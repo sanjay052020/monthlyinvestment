@@ -50,6 +50,7 @@ const AmountCalculator: React.FC = () => {
                         setText(e.target.value)
                         setShowCalculator(false)
                     }}
+                    className="amt-login-input"
                 />
 
                 <input
@@ -57,6 +58,7 @@ const AmountCalculator: React.FC = () => {
                     placeholder="Enter amount"
                     value={amount || ""}
                     onChange={(e) => setAmount(Number(e.target.value))}
+                    className="amt-login-input"
                 />
 
                 <button onClick={handleAdd} className="icon-btn">
