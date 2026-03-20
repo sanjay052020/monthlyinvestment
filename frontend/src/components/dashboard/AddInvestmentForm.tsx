@@ -65,6 +65,14 @@ const AddInvestmentForm: React.FC = () => {
     useEffect(() => {
         setShowPopup(false)
     }, [])
+
+    const isFormValid =
+        formData.amount > 0 &&
+        formData.toInvestment.trim() !== "" &&
+        formData.date.trim() !== "" &&
+        formData.reason.trim() !== "";
+
+
     return (<>
         <form className={styles.formContainer} onSubmit={handleSubmit}>
             <h2 className={styles.formTitle}>Add Investment</h2>
@@ -149,7 +157,7 @@ const AddInvestmentForm: React.FC = () => {
                 />
             </div>
 
-            <button type="submit" className={styles.submitButton} disabled={loading}>
+            <button type="submit" className={styles.submitButton} disabled={loading || !isFormValid}>
                 Submit Investment
             </button>
         </form>
