@@ -100,18 +100,18 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveContent }) => {
         )}
 
         {/* Projects */}
-        <div className={`menu-item ${activeTab === "Projects" ? "active" : ""}`} onClick={() => handleTabClick("Projects")}>
+        <div className={`menu-item ${activeTab === "excel" ? "active" : ""}`} onClick={() => handleTabClick("excel")}>
           <div className="menu-left">
             <FolderPlus size={20} />
-            <span>Projects</span>
+            <span>Dummy Excel Open</span>
           </div>
         </div>
 
         {/* Tasks */}
-        <div className={`menu-item ${activeTab === "Tasks" ? "active" : ""}`} onClick={() => handleTabClick("Tasks")}>
+        <div className={`menu-item ${activeTab === "calculator" ? "active" : ""}`} onClick={() => handleTabClick("calculator")}>
           <div className="menu-left">
             <CheckSquare size={20} />
-            <span>Tasks</span>
+            <span>Calculator</span>
           </div>
         </div>
 

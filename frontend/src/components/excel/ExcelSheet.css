@@ -1,0 +1,41 @@
+.excel-table {
+  position: relative;
+  background-color: #f1e2ee;
+  padding: 20px;
+  margin: 40px auto;
+  max-width: 700px;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  font-family: Arial, sans-serif;
+  border: 2px solid blue;
+}
+
+.excel-th,
+.excel-td {
+  border: 1px solid #ccc;
+  width: 100px;
+  height: 30px;
+  text-align: left;
+  padding: 4px;
+}
+
+.excel-th {
+  background-color: #f4f4f4;
+}
+
+.excel-row-header {
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  text-align: center;
+  width: 40px;
+}
+
+.excel-input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  padding: 2px;
+  box-sizing: border-box;
+}

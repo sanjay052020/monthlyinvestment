@@ -5,6 +5,8 @@ import InvestmentTable from "./InvestmentTable";
 import ReportGenerator from "../reportgenerate/ReportGenerator";
 import Home from "../home/Home";
 import Navbar from "../navbar/Navbar";
+import ExcelSheet from "../excel/ExcelSheet";
+import AmountCalculator from "../calculator/AmountCalculator";
 
 const Dashboard: React.FC = () => {
   const [activeContent, setActiveContent] = useState<string>("Home");
@@ -47,8 +49,8 @@ const Dashboard: React.FC = () => {
           {activeContent === "ViewMonthly" && <InvestmentTable statusFilter="completed" />}
           {activeContent === "ViewYearly" && <h2>📊 Yearly Expenses Report</h2>}
           {activeContent === "ReportGenerate" && <ReportGenerator />}
-          {activeContent === "Projects" && <h2>📂 Projects Section</h2>}
-          {activeContent === "Tasks" && <h2>✅ Tasks Section</h2>}
+          {activeContent === "excel" && <h2><ExcelSheet /></h2>}
+          {activeContent === "calculator" && <h2><AmountCalculator /></h2>}
           {activeContent === "Settings" && <h2>⚙️ Settings Overview</h2>}
           {activeContent === "Messages" && <h2>💬 Messages Section</h2>}
           {activeContent === "Updates" && <h2>🔔 Updates Section</h2>}
