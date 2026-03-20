@@ -1,39 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ExcelSheet.css";
 
-type CellProps = {
-  row: number;
-  col: number;
-  value: string;
-  onChange: (row: number, col: number, value: string) => void;
-};
-
-const Cell: React.FC<CellProps> = ({ row, col, value, onChange }) => {
-  return (
-    <td className="excel-td">
-      <input
-        className="excel-input"
-        value={value}
-        onChange={(e) => onChange(row, col, e.target.value)}
-      />
-    </td>
-  );
-};
-
-type ExcelSheetProps = {
-  rows?: number;
-  cols?: number;
-};
-
-const ExcelSheet: React.FC<ExcelSheetProps> = ({ rows = 10, cols = 5 }) => {
+const ExcelSheet: React.FC<{ rows?: number; cols?: number }> = ({ rows = 10, cols = 5 }) => {
   const [data, setData] = useState<string[][]>(
-    Array.from({ length: rows }, () => Array(cols).fill(""))
+    () => {
+      const saved = localStorage.getItem("excelData");
+      return saved ? JSON.parse(saved) : Array.from({ length: rows }, () => Array(cols).fill(""));
+    }
   );
 
   const handleChange = (row: number, col: number, value: string) => {
-    const newData = [...data];
-    newData[row][col] = value;
+    const newData = data.map((r, rowIndex) =>
+      rowIndex === row
+        ? r.map((c, colIndex) => (colIndex === col ? value : c))
+        : [...r]
+    );
     setData(newData);
+    localStorage.setItem("excelData", JSON.stringify(newData));
   };
 
   return (
@@ -43,7 +26,7 @@ const ExcelSheet: React.FC<ExcelSheetProps> = ({ rows = 10, cols = 5 }) => {
           <th className="excel-row-header"></th>
           {Array.from({ length: cols }).map((_, colIndex) => (
             <th key={colIndex} className="excel-th">
-              {String.fromCharCode(65 + colIndex)} {/* A, B, C... */}
+              {String.fromCharCode(65 + colIndex)}
             </th>
           ))}
         </tr>
@@ -53,13 +36,13 @@ const ExcelSheet: React.FC<ExcelSheetProps> = ({ rows = 10, cols = 5 }) => {
           <tr key={rowIndex}>
             <td className="excel-row-header">{rowIndex + 1}</td>
             {Array.from({ length: cols }).map((_, colIndex) => (
-              <Cell
-                key={colIndex}
-                row={rowIndex}
-                col={colIndex}
-                value={data[rowIndex][colIndex]}
-                onChange={handleChange}
-              />
+              <td key={colIndex} className="excel-td">
+                <input
+                  className="excel-input"
+                  value={data[rowIndex][colIndex]}
+                  onChange={(e) => handleChange(rowIndex, colIndex, e.target.value)}
+                />
+              </td>
             ))}
           </tr>
         ))}

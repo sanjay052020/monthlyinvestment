@@ -66,8 +66,14 @@
   transition: background 0.3s ease;
 }
 
-.submitButton:hover {
-  background: #0558c0;
+.submitButton:hover:enabled {
+  background-color: #005a9e;
+}
+
+.submitButton:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;      /* greyed out when disabled */
 }
 
 .react-select__control {

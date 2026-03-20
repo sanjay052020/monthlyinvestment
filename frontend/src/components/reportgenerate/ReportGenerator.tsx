@@ -14,7 +14,7 @@ type Status = "form" | "loading" | "success" | "error";
 
 const ReportGenerator: React.FC = () => {
     const [reportType, setReportType] = useState("Sales Report");
-    const [category, setCategory] = useState("Monthly");
+    const [category, setCategory] = useState("pending");
     const [format, setFormat] = useState("PDF");
     const [fromDate, setFromDate] = useState("2026-01-01");
     const [toDate, setToDate] = useState("2026-01-31");
@@ -40,7 +40,6 @@ const ReportGenerator: React.FC = () => {
     const filterByDateRange = (data: any[], from: string, to: string) => {
         const fromTime = new Date(from).getTime();
         const toTime = new Date(to).getTime();
-
         return data.filter(item=>item.status === category).filter(item => {
             const itemDate = new Date(item.date).getTime(); // assuming each investment has a `date` field
             return itemDate >= fromTime && itemDate <= toTime;
