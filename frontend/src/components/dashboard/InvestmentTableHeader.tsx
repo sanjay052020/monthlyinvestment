@@ -59,10 +59,12 @@ const InvestmentTableHeader: React.FC<InvestmentTableHeaderProps> = ({
           />
         </label>
       </fieldset>
-
-      <div className={styles.totalAmount}>
-        <strong>Total Amount:</strong> ₹ {formatIndianAmount(totalAmount)}
-      </div>
+      <fieldset className={styles.inputGroupWrapper}>
+        <legend className={styles.groupLegend}>Total Amount</legend>
+        <div className={styles.totalAmount}>
+          <strong>Total Amount:</strong> ₹ {formatIndianAmount(totalAmount)}
+        </div>
+      </fieldset>
     </div>
   );
 };

@@ -13,6 +13,9 @@ export const investmentOptions = [
     { value: "Mutual Fund Expanses", label: "Mutual Fund Expanses" },
     { value: "Stock Expanses", label: "Stock Expanses" },
     { value: "Electricity Expanses", label: "Electricity Expanses" },
-    { value: "Credit Card Expanses", label: "Credit Card Expanses" },
+    { value: "Axis Credit Card Bill", label: "Axis Credit Card Bill" },
+    { value: "SBI Credit Card Bill", label: "SBI Credit Card Bill" },
+    { value: "Axis Credit Card Expanses", label: "Axis Credit Card Expanses" },
+    { value: "SBI Credit Card Expanses", label: "SBI Credit Card Expanses" },
     { value: "FD Expanses", label: "FD Expanses" },
 ];
