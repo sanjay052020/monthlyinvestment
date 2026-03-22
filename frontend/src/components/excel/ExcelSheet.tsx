@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./ExcelSheet.css";
 
 const ExcelSheet: React.FC<{ rows?: number; cols?: number }> = ({ rows = 10, cols = 5 }) => {

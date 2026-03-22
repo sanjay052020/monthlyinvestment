@@ -15,7 +15,8 @@ import {
   Lifebuoy,
   Plus,
   Minus,
-  SignOut
+  SignOut,
+  UserFocus
 } from "phosphor-react";
 import "./Sidebar.css";
 import { useAppDispatch } from "../../hooks";
@@ -136,6 +137,27 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveContent }) => {
             <div className="submenu-item"><LockSimple size={18} /> Security</div>
             <div className="submenu-item"><PuzzlePiece size={18} /> Integrations</div>
             <div className="submenu-item"><CreditCard size={18} /> Billing</div>
+          </div>
+        )}
+
+        {/* User Contact */}
+        <div className="menu-item" onClick={() => toggleSection("contact")}>
+          <div className="menu-left">
+            <UserFocus size={20} />
+            <span>User Contact</span>
+          </div>
+          <div className="menu-right">
+            {expandedSection === "contact" ? (
+              <Minus size={18} weight="bold" />
+            ) : (
+              <Plus size={18} weight="bold" />
+            )}
+          </div>
+        </div>
+        {expandedSection === "contact" && (
+          <div className="submenu">
+            <div className={`submenu-item ${activeTab === "userdetails" ? "active" : ""}`} onClick={() => handleTabClick("userdetails")}><User size={18} /> User details</div>
+            <div className={`submenu-item ${activeTab === "enterusers" ? "active" : ""}`} onClick={() => handleTabClick("enterusers")}><IdentificationCard size={18} /> Enter Users</div>
           </div>
         )}
 

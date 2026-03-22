@@ -7,6 +7,8 @@ import Home from "../home/Home";
 import Navbar from "../navbar/Navbar";
 import ExcelSheet from "../excel/ExcelSheet";
 import AmountCalculator from "../calculator/AmountCalculator";
+import UserContactForm from "../contacts/UserContactForm";
+import UserContactList from "../contacts/UserContactList";
 
 const Dashboard: React.FC = () => {
   const [activeContent, setActiveContent] = useState<string>("Home");
@@ -52,6 +54,8 @@ const Dashboard: React.FC = () => {
           {activeContent === "excel" && <h2><ExcelSheet /></h2>}
           {activeContent === "calculator" && <h2><AmountCalculator /></h2>}
           {activeContent === "Settings" && <h2>⚙️ Settings Overview</h2>}
+          {activeContent === "userdetails" && <h2><UserContactList /></h2>}
+          {activeContent === "enterusers" && <h2><UserContactForm /></h2>}
           {activeContent === "Messages" && <h2>💬 Messages Section</h2>}
           {activeContent === "Updates" && <h2>🔔 Updates Section</h2>}
           {activeContent === "Support" && <h2>🛟 Support Section</h2>}
