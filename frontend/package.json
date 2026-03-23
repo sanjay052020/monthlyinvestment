@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@reduxjs/toolkit": "^2.11.2",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
@@ -20,6 +21,7 @@
     "react": "^19.2.4",
     "react-chartjs-2": "^5.3.1",
     "react-dom": "^19.2.4",
+    "react-hook-form": "^7.72.0",
     "react-icons": "^5.6.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.13.1",
@@ -27,7 +29,8 @@
     "react-select": "^5.10.2",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "yup": "^1.7.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -55,7 +58,6 @@
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",
-    "@types/react": "^19.2.14",
-    "workbox-cli": "^7.4.0"
+    "@types/react": "^19.2.14"
   }
 }
