@@ -7,6 +7,7 @@ import forgotPasswordReducer from "./features/auth/forgotPasswordSlice";
 import resetPasswordReducer from "./features/auth/resetPasswordSlice";
 import navbarReducer from "./features/navbar/navbarSlice";
 import userContactReducer from "./features/usercontact/userContactSlice";
+import billingReducer from "./features/billing/billingSlice";
 
 const store = configureStore({
   reducer: {
@@ -16,7 +17,8 @@ const store = configureStore({
     forgotPassword: forgotPasswordReducer,
     resetPassword: resetPasswordReducer,
     navbar: navbarReducer,
-    userContact: userContactReducer
+    userContact: userContactReducer,
+    billing: billingReducer
 
   },
 });

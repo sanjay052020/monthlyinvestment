@@ -161,6 +161,28 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveContent }) => {
           </div>
         )}
 
+        {/* User Billing */}
+        <div className="menu-item" onClick={() => toggleSection("billing")}>
+          <div className="menu-left">
+            <UserFocus size={20} />
+            <span>Users Billing</span>
+          </div>
+          <div className="menu-right">
+            {expandedSection === "billing" ? (
+              <Minus size={18} weight="bold" />
+            ) : (
+              <Plus size={18} weight="bold" />
+            )}
+          </div>
+        </div>
+        {expandedSection === "billing" && (
+          <div className="submenu">
+            <div className={`submenu-item ${activeTab === "createbills" ? "active" : ""}`} onClick={() => handleTabClick("createbills")}><User size={18} />Create Customer Bills</div>
+            <div className={`submenu-item ${activeTab === "showtransaction" ? "active" : ""}`} onClick={() => handleTabClick("showtransaction")}><IdentificationCard size={18} />Transaction Bills</div>
+          </div>
+        )}
+
+
         <div className="menu-item" onClick={() => setActiveContent("Messages")}>
           <div className="menu-left">
             <ChatCircle size={20} /> Messages

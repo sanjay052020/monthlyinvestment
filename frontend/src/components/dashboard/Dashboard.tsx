@@ -9,6 +9,8 @@ import ExcelSheet from "../excel/ExcelSheet";
 import AmountCalculator from "../calculator/AmountCalculator";
 import UserContactForm from "../contacts/UserContactForm";
 import UserContactList from "../contacts/UserContactList";
+import { BillingForm } from "../billing/BillingForm";
+import BillingTable from "../billing/BillingTable";
 
 const Dashboard: React.FC = () => {
   const [activeContent, setActiveContent] = useState<string>("Home");
@@ -58,6 +60,8 @@ const Dashboard: React.FC = () => {
           {activeContent === "enterusers" && <h2><UserContactForm /></h2>}
           {activeContent === "Messages" && <h2>💬 Messages Section</h2>}
           {activeContent === "Updates" && <h2>🔔 Updates Section</h2>}
+          {activeContent === "createbills" && <h2><BillingForm /></h2>}
+          {activeContent === "showtransaction" && <h2><BillingTable /></h2>}
           {activeContent === "Support" && <h2>🛟 Support Section</h2>}
           {activeContent === "todo" && <InvestmentTable statusFilter="pending" />}
         </main>
