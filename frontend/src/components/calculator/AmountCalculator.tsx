@@ -61,7 +61,7 @@ const AmountCalculator: React.FC = () => {
                     className="amt-login-input"
                 />
 
-                <button onClick={handleAdd} className="icon-btn">
+                <button onClick={handleAdd} className="amticon-btn">
                     <PlusCircle size={20} weight="bold" />
                 </button>
             </div>
@@ -84,7 +84,7 @@ const AmountCalculator: React.FC = () => {
                                 <td>₹{formatIndianAmount(entry.amount)}</td>
                                 <td>
                                     <button
-                                        className="delete-btn"
+                                        className="amtdelete-btn"
                                         onClick={() => handleDelete(index)}
                                     >
                                         <Trash size={18} weight="bold" />

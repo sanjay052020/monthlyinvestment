@@ -59,3 +59,17 @@ def delete_bill(billing_id):
         return jsonify({"error": "Bill not found"}), 404
     controller.delete_bill(billing_id)
     return jsonify({"message": f"Bill {billing_id} deleted"})
+
+@bill_routes.route("/bills/<string:billing_id>/products/<string:product_id>", methods=["DELETE"])
+
+def delete_product_from_bill(billing_id, product_id):
+    bill = controller.read_bill(billing_id)
+    if not bill:
+        return jsonify({"error": "Bill not found"}), 404
+
+    updated_bill = controller.delete_product_from_bill(billing_id, product_id)
+    if not updated_bill:
+        return jsonify({"error": f"Product {product_id} not found in bill {billing_id}"}), 404
+
+    return jsonify(clean_bill(updated_bill))
+

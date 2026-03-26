@@ -42,6 +42,9 @@ const ProductRow: React.FC<ProductRowProps> = ({
                         if (selected) {
                             updateProduct(index, "name", selected.label);
                             updateProduct(index, "productId", selected.productId);
+                            if (errors[`product-id-${index}`]) {
+                                errors[`product-id-${index}`] = "";
+                            }
                         }
                     }}
                     className="react-select-container"
@@ -62,6 +65,9 @@ const ProductRow: React.FC<ProductRowProps> = ({
                     readOnly
                     placeholder="Please select product name"
                 />
+                {errors[`product-id-${index}`] && (
+                    <span className="error">{errors[`product-id-${index}`]}</span>
+                )}
             </div>
 
             {/* Qty */}
@@ -106,7 +112,7 @@ const ProductRow: React.FC<ProductRowProps> = ({
 
             {/* Trash icon */}
             {productsLength > 1 && (
-                <button type="button" className="icon-btn delete" onClick={() => removeProduct(index)}>
+                <button type="button" className="billformicon-btn delete" onClick={() => removeProduct(index)}>
                     <Trash size={30} />
                 </button>
             )}
@@ -115,7 +121,7 @@ const ProductRow: React.FC<ProductRowProps> = ({
             {index === productsLength - 1 && (
                 <button
                     type="button"
-                    className="icon-btn add"
+                    className="btn productrowadd"
                     onClick={addProduct}
                     disabled={!isProductFill(product)}
                 >

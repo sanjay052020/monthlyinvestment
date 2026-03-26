@@ -182,7 +182,6 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveContent }) => {
           </div>
         )}
 
-
         <div className="menu-item" onClick={() => setActiveContent("Messages")}>
           <div className="menu-left">
             <ChatCircle size={20} /> Messages

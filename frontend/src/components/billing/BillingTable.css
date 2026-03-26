@@ -22,7 +22,7 @@ h2, h3 {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
-  font-size: 25px;
+  font-size: 20px;
   font-family: 'Times New Roman', Times, serif;
 }
 
@@ -73,7 +73,7 @@ h2, h3 {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
-  font-size: 17px;
+  font-size: 12px;
   font-family: 'Times New Roman', Times, serif;
 }
 
@@ -185,3 +185,12 @@ h2, h3 {
   text-align: center;
   margin-top: 20px;
 }
+
+.products-scroll-container {
+  max-height: 300px;   /* adjust as needed */
+  overflow-y: auto;
+  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+

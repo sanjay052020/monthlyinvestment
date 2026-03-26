@@ -74,16 +74,7 @@
     font-family: 'Times New Roman', Times, serif;
 }
 
-.product-field input {
-    padding: 12px;
-    border: 1px solid #bbb;
-    border-radius: 4px;
-    width: 90%;
-    box-shadow: 1px 1px 20px rgba(1, 1, 1, 0.25);
-    border: 1px solid #1e0ff2;
-}
-
-.icon-btn {
+.billformicon-btn {
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -92,17 +83,20 @@
     font-weight: bold;
 }
 
-.icon-btn.add {
+.billformicon-btn.add {
     color: #2d7ff9;
 }
 
-.icon-btn.delete {
-    color: #d9534f;
-    background-color: #ecb3b3;
+.billformicon-btn.delete {
+    color: #7e0703;
+    background-color: #f08b8b;
+    border: none;
+    border-radius: 5px;
 }
 
-.icon-btn.delete:hover {
-    color: #a94442;
+.billformicon-btn.delete:hover {
+    color: #a94442; 
+    background-color: #b38180;
 }
 
 .form-actions {
@@ -209,3 +203,14 @@
   color: #7a7d81;
   padding: 0 8px;
 }
+
+.btn.productrowadd{
+    background-color: #0668e7;
+    height: 42px;
+}
+
+.btn.productrowadd:hover{
+    background-color: #013272;
+    height: 42px;
+}
+

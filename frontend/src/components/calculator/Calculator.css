@@ -17,14 +17,14 @@
   border-bottom: 2px solid #444;
 }
 
-.buttons {
+.calbuttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 6px;
   padding: 10px;
 }
 
-button {
+.calbuttons {
   padding: 15px;
   font-size: 18px;
   border: none;
@@ -34,7 +34,7 @@ button {
   transition: background 0.2s ease;
 }
 
-button:hover {
+.calbuttons:hover {
   background: #ccc;
 }
 

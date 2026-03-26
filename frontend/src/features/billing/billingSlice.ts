@@ -63,6 +63,20 @@ export const deleteBill = createAsyncThunk(
         return response.data;
     });
 
+
+// ✅ Delete product from a bill
+export const deleteProductFromBill = createAsyncThunk(
+    "billing/deleteProductFromBill",
+    async ({ billing_id, product_id }: { billing_id: string; product_id: string }) => {
+        debugger
+        const response = await api.delete(
+            `/bills/${billing_id}/products/${product_id}`
+        );
+        return { billing_id, product_id, updatedBill: response.data };
+    }
+);
+
+
 // --- Slice ---
 const billingSlice = createSlice({
     name: "billing",
@@ -97,7 +111,15 @@ const billingSlice = createSlice({
             // Delete
             .addCase(deleteBill.fulfilled, (state, action: PayloadAction<string>) => {
                 state.bills = state.bills.filter((b) => b.billing_id !== action.payload);
+            })
+            .addCase(deleteProductFromBill.fulfilled, (state, action) => {
+                const { billing_id, updatedBill } = action.payload;
+                const index = state.bills.findIndex((b) => b.billing_id === billing_id);
+                if (index !== -1) {
+                    state.bills[index] = updatedBill; // replace with updated bill from backend
+                }
             });
+
     },
 });
 

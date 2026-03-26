@@ -65,9 +65,9 @@ const Dashboard: React.FC = () => {
           {activeContent === "Support" && <h2>🛟 Support Section</h2>}
           {activeContent === "todo" && <InvestmentTable statusFilter="pending" />}
         </main>
-        </div>
       </div>
-      );
+    </div>
+  );
 };
 
-      export default Dashboard;
+export default Dashboard;

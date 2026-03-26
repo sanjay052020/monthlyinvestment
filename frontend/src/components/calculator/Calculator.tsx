@@ -29,7 +29,7 @@ const Calculator: React.FC = () => {
   return (
     <div className="calculator">
       <div className="display">{display}</div>
-      <div className="buttons">
+      <div className="calbuttons">
         <button onClick={handleClear} className="clear">C</button>
         <button onClick={() => handleClick("/")}>÷</button>
         <button onClick={() => handleClick("*")}>×</button>

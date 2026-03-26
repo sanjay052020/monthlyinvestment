@@ -81,6 +81,7 @@ export const BillingForm: React.FC = () => {
 
         products.forEach((p, i) => {
             if (!p.name.trim()) newErrors[`product-name-${i}`] = "Product name is required.";
+            if (!p.productId.trim()) newErrors[`product-id-${i}`] = "Product id is required.";
             if (p.qty <= 0) newErrors[`product-qty-${i}`] = "Qty must be greater than 0.";
             if (p.rate <= 0) newErrors[`product-rate-${i}`] = "Rate must be greater than 0.";
             if (!p.weight.trim()) newErrors[`product-weight-${i}`] = "Weight is required.";
@@ -129,6 +130,7 @@ export const BillingForm: React.FC = () => {
     const isProductFill = (product: Product) => {
         return (
             product.name.trim() !== "" &&
+            product.productId.trim() !== "" &&
             product.productId.trim() !== "" &&
             product.qty > 0 &&
             product.rate > 0 &&

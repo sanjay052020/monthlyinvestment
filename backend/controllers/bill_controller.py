@@ -1,5 +1,5 @@
 # bill_controller.py
-from models.bill_model import Bill
+from models.bill_model import Bill,bills_collection
 
 class BillController:
     def __init__(self):
@@ -76,3 +76,19 @@ class BillController:
             Bill.update_bill_in_db(billing_id, {"products": bill.products, "total": bill.calculate_total()})
             return Bill.get_bill_by_id(billing_id)
         return None
+    
+    def delete_product_from_bill(self, billing_id, product_id):
+        bill = bills_collection.find_one({"billing_id": billing_id})
+        if not bill:
+            return None
+
+        # Remove product by productId
+        result = bills_collection.update_one(
+            {"billing_id": billing_id},
+            {"$pull": {"products": {"productId": product_id}}}
+        )
+
+        if result.modified_count == 0:
+            return None
+
+        return self.read_bill(billing_id)

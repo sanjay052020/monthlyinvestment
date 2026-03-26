@@ -46,7 +46,7 @@
 }
 
 
-.icon-btn {
+.amticon-btn {
   background-color: #0078d7;
   color: #fff;
   border: none;
@@ -58,7 +58,7 @@
   gap: 6px;
 }
 
-.icon-btn:hover {
+.amticon-btn:hover {
   background-color: #005a9e;
 }
 
@@ -80,7 +80,7 @@
   background-color: #f4f4f4;
 }
 
-.delete-btn {
+.amtdelete-btn {
   background-color: #d83b01;
   padding: 6px 10px;
   border-radius: 4px;
