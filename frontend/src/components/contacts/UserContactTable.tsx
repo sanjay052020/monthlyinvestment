@@ -22,6 +22,8 @@ interface Props {
 const UserContactTable: React.FC<Props> = ({ contacts, onEditSave, onDelete }) => {
     const [editRowId, setEditRowId] = useState<string | null>(null);
     const [editData, setEditData] = useState<UserContact | null>(null);
+    const [searchTerm, setSearchTerm] = useState<string>("");
+
 
     const handleEditClick = (contact: UserContact) => {
         setEditRowId(contact.user_id || "");
@@ -47,9 +49,30 @@ const UserContactTable: React.FC<Props> = ({ contacts, onEditSave, onDelete }) =
         }
     };
 
+    // Filter contacts by name or mobile
+    const filteredContacts = contacts.filter(
+        (contact) =>
+            contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            contact.mobile.includes(searchTerm)
+    );
+
+
+
     return (
         <div className="table-container">
             <h2 className="table-title">User Contact List</h2>
+            <fieldset className="inputGroupWrapperContact">
+                <legend className="groupLegendContact">Search Input</legend>
+                {/* Search input */}
+                <input
+                    type="text"
+                    placeholder="Search by name or mobile..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="search-input"
+                />
+            </fieldset>
+
             <table className="contact-table">
                 <thead>
                     <tr>
@@ -65,7 +88,7 @@ const UserContactTable: React.FC<Props> = ({ contacts, onEditSave, onDelete }) =
                     </tr>
                 </thead>
                 <tbody>
-                    {contacts.map((contact, index) => (
+                    {filteredContacts.map((contact, index) => (
                         <tr key={contact.user_id || contact.mobile}>
                             {editRowId === contact.user_id ? (
                                 <>

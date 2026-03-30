@@ -113,3 +113,38 @@
   background-color: #eef6ff;
 }
 
+/* Search input styling */
+.search-input {
+  width: 100%;
+  max-width: 300px;
+  padding: 8px 12px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.search-input:focus {
+  border-color: #0078d7; /* Microsoft blue accent */
+  outline: none;
+  box-shadow: 0 0 4px rgba(0,120,215,0.4);
+}
+
+.inputGroupWrapperContact {
+  border: 2px solid #0668e7;
+  border-radius: 12px;
+  padding: 10px 10px;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
+  margin-bottom: 20px;
+}
+
+.groupLegendContact {
+  font-size: .8rem;
+  font-weight: 500;
+  color: #7a7d81;
+  padding: 0 8px;
+}

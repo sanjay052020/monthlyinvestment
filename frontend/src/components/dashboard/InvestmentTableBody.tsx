@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./InvestmentTable.module.css";
 import { Investment } from "../../features/auth/addInvestmentSlice";
-import { formatAmount, formatDate } from "../../utils/formatAmount";
+import { formatAmount, formatDate, formatIndianAmount } from "../../utils/formatAmount";
 import { Trash, Pencil, ArrowUp, ArrowDown } from "phosphor-react";
 
 interface InvestmentTableBodyProps {
@@ -57,7 +57,7 @@ const InvestmentTableBody: React.FC<InvestmentTableBodyProps> = ({
             <tr key={inv._id ?? index}>
               <td>{startIndex + index + 1}</td>
               <td>{formatDate(inv.date)}</td>
-              <td>₹ {formatAmount(inv.amount)}</td>
+              <td>₹ {formatIndianAmount(inv.amount)}</td>
               <td>{inv.toInvestment}</td>
               <td>{inv.reason}</td>
               <td>

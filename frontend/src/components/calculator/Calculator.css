@@ -1,52 +1,68 @@
 .calculator {
-  width: 260px;
+  width: 280px;
   margin: 40px auto;
-  background: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-  font-family: Arial, sans-serif;
+  background: #fdfdfd;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  font-family: 'Segoe UI', Arial, sans-serif;
   overflow: hidden;
 }
 
+/* Display */
 .display {
-  background: #222;
-  color: #0f0;
-  font-size: 24px;
-  padding: 15px;
+  background: #1e1e1e;
+  color: #00ff88;
+  font-size: 28px;
+  padding: 18px;
   text-align: right;
-  border-bottom: 2px solid #444;
+  border-bottom: 2px solid #333;
+  letter-spacing: 1px;
 }
 
+/* Button Grid */
 .calbuttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
-  padding: 10px;
+  gap: 10px;
+  padding: 15px;
+  background: #fafafa;
 }
 
-.calbuttons {
-  padding: 15px;
+/* Buttons */
+.calbuttons button {
+  padding: 18px;
   font-size: 18px;
   border: none;
-  border-radius: 4px;
-  background: #e0e0e0;
+  border-radius: 6px;
+  background: #e6e6e6;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.calbuttons:hover {
-  background: #ccc;
+.calbuttons button:hover {
+  background: #d4d4d4;
+  transform: translateY(-2px);
 }
 
+/* Special Buttons */
 .clear {
   background: #d83b01;
   color: #fff;
 }
 
+.clear:hover {
+  background: #b53001;
+}
+
 .equals {
   background: #0078d7;
   color: #fff;
-  grid-column: span 1;
+  grid-column: span 2;
+}
+
+.equals:hover {
+  background: #005a9e;
 }
 
 .zero {
