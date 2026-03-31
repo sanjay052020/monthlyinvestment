@@ -31,6 +31,7 @@ const InvestmentTable: React.FC<InvestmentTableProps> = ({ statusFilter = "compl
     // Fetch investments on mount
     useEffect(() => {
         dispatch(fetchAllInvestments());
+        setShowPopup(false);
     }, [dispatch]);
 
     // Show popup when message changes

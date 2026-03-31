@@ -50,11 +50,15 @@ const UserContactTable: React.FC<Props> = ({ contacts, onEditSave, onDelete }) =
     };
 
     // Filter contacts by name or mobile
-    const filteredContacts = contacts.filter(
-        (contact) =>
-            contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            contact.mobile.includes(searchTerm)
-    );
+    const filteredContacts = contacts && contacts.filter((contact) => {
+        const name = contact?.name?.toLowerCase() || "";
+        const mobile = contact?.mobile || "";
+        const term = searchTerm?.toLowerCase() || "";
+
+        return name.includes(term) || mobile.includes(searchTerm || "");
+    });
+
+
 
 
 

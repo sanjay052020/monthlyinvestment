@@ -126,6 +126,9 @@ export const BillingForm: React.FC = () => {
     }));
 
     const popupMsg = `Bill No. - ${countProduct} || Total Amount - ${totalAmt.toFixed(2)}`;
+    useEffect(() => {
+        setShowPopup(false)
+    }, [])
 
     const isProductFill = (product: Product) => {
         return (

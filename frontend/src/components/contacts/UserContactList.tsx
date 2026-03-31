@@ -21,6 +21,7 @@ const UserContactList: React.FC = () => {
   useEffect(() => {
     // Fetch all user contacts when component mounts
     dispatch(fetchUserContacts());
+    setShowPopup(false);
   }, [dispatch]);
 
   // Save edited contact

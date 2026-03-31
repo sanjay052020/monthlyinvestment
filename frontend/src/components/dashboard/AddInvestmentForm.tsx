@@ -60,11 +60,14 @@ const AddInvestmentForm: React.FC = () => {
                 status: "pending"
             })
         }
-    }, [message])
+        // Auto-close after 3 seconds
+        const timer = setTimeout(() => {
+            setShowPopup(false);
+        }, 3000);
 
-    useEffect(() => {
-        setShowPopup(false)
-    }, [])
+        // Cleanup to avoid memory leaks
+        return () => clearTimeout(timer);
+    }, [message])
 
     const isFormValid =
         formData.amount > 0 &&
