@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { PencilSimple, Trash, Check, X } from "phosphor-react";
 import "./UserContactTable.css";
+import Pagination from "../dashboard/Pagination";
 
 interface UserContact {
     user_id?: string;
@@ -23,8 +24,8 @@ const UserContactTable: React.FC<Props> = ({ contacts, onEditSave, onDelete }) =
     const [editRowId, setEditRowId] = useState<string | null>(null);
     const [editData, setEditData] = useState<UserContact | null>(null);
     const [searchTerm, setSearchTerm] = useState<string>("");
-
-
+    const [currentPage, setCurrentPage] = useState(1);
+    const rowsPerPage = 10;
     const handleEditClick = (contact: UserContact) => {
         setEditRowId(contact.user_id || "");
         setEditData({ ...contact });
@@ -58,8 +59,11 @@ const UserContactTable: React.FC<Props> = ({ contacts, onEditSave, onDelete }) =
         return name.includes(term) || mobile.includes(searchTerm || "");
     });
 
-
-
+    // Pagination
+    const totalPages = Math.ceil(filteredContacts.length / rowsPerPage);
+    const startIndex = (currentPage - 1) * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+    const paginatedContacts = filteredContacts.slice(startIndex, endIndex);
 
 
     return (
@@ -92,7 +96,7 @@ const UserContactTable: React.FC<Props> = ({ contacts, onEditSave, onDelete }) =
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredContacts.map((contact, index) => (
+                    {paginatedContacts.map((contact, index) => (
                         <tr key={contact.user_id || contact.mobile}>
                             {editRowId === contact.user_id ? (
                                 <>
@@ -127,8 +131,17 @@ const UserContactTable: React.FC<Props> = ({ contacts, onEditSave, onDelete }) =
                             )}
                         </tr>
                     ))}
+
                 </tbody>
+
             </table>
+            {totalPages > 1 && (
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                />
+            )}
         </div>
     );
 };

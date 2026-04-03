@@ -19,12 +19,19 @@ const Calculator: React.FC = () => {
     setDisplay("0");
   };
 
+  const handleDelete = () => {
+    setQueue((prev) => prev.slice(0, -1));
+    setDisplay((prev) =>
+      prev.length > 1 ? prev.slice(0, -1) : "0"
+    );
+  };
+
   const handleEquals = () => {
     try {
       const expression = queue.join("");
       const result = eval(expression); // demo only
       setDisplay(String(result));
-      setQueue([String(result)]); // reset queue to result
+      setQueue([String(result)]);
     } catch {
       setDisplay("Error");
       setQueue([]);
@@ -45,10 +52,7 @@ const Calculator: React.FC = () => {
       } else if (e.key === ".") {
         handleClick(".");
       } else if (e.key === "Backspace") {
-        setQueue((prev) => prev.slice(0, -1));
-        setDisplay((prev) =>
-          prev.length > 1 ? prev.slice(0, -1) : "0"
-        );
+        handleDelete();
       } else if (e.shiftKey && e.key === "0") {
         handleClick("00");
       }
@@ -64,6 +68,7 @@ const Calculator: React.FC = () => {
 
       <div className="calbuttons">
         <button onClick={handleClear} className="clear">C</button>
+        <button onClick={handleDelete} className="delete">⌫</button>
         <button onClick={() => handleClick("/")}>÷</button>
         <button onClick={() => handleClick("*")}>×</button>
         <button onClick={() => handleClick("-")}>−</button>

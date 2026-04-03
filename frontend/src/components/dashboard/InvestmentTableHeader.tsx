@@ -10,6 +10,8 @@ interface InvestmentTableHeaderProps {
   totalAmount: number;
   searchTerm: string;
   setSearchTerm: (value: string) => void;
+  systemMonthAmount: number;
+  pendingAmount: number;
 }
 
 const InvestmentTableHeader: React.FC<InvestmentTableHeaderProps> = ({
@@ -20,6 +22,8 @@ const InvestmentTableHeader: React.FC<InvestmentTableHeaderProps> = ({
   totalAmount,
   searchTerm,
   setSearchTerm,
+  systemMonthAmount,
+  pendingAmount
 }) => {
   return (
     <div className={styles.searchBar}>
@@ -60,9 +64,11 @@ const InvestmentTableHeader: React.FC<InvestmentTableHeaderProps> = ({
         </label>
       </fieldset>
       <fieldset className={styles.inputGroupWrapper}>
-        <legend className={styles.groupLegend}>Total Amount</legend>
-        <div className={styles.totalAmount}>
-          <strong>Total Amount:</strong> ₹ {formatIndianAmount(totalAmount)}
+        <legend className={styles.groupLegend}>Amount Expanses...</legend>
+        <div className={styles.totalAmount}>          
+          <span className={styles.totalClass}>Total Expanses Amount: ₹ {formatIndianAmount(totalAmount)}</span>
+          <p className={styles.todoclass}>Todo Expanses Amount: ₹ {formatIndianAmount(pendingAmount)}</p>
+          <p className={styles.currentclass}><strong>Current Month Expanses Amount:</strong> ₹ {formatIndianAmount(systemMonthAmount)}</p>
         </div>
       </fieldset>
     </div>

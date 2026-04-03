@@ -68,10 +68,33 @@ const InvestmentTable: React.FC<InvestmentTableProps> = ({ statusFilter = "compl
             return matchesMonthYear && matchesSearch;
         }) || [];
 
-    // Calculate total amount for selected status
+    // Calculate total amount for selected status = "completed"
     const totalAmount = filteredData
-        .filter((item) => item.status?.toLowerCase() === statusFilter.toLowerCase())
+        .filter((item) => item.status?.toLowerCase() === "completed")
         .reduce((sum, inv) => sum + Number(inv.amount), 0);
+
+
+
+    // Get system current month/year
+    const now = new Date();
+    const currentMonth = (now.getMonth() + 1).toString(); // months are 0-based
+    const currentYear = now.getFullYear().toString();
+
+    // Calculate total amount for current system month
+    const systemMonthAmount = list
+        ?.filter((item) => {
+            const itemDate = new Date(item.date);
+            const itemMonth = (itemDate.getMonth() + 1).toString();
+            const itemYear = itemDate.getFullYear().toString();
+
+            return itemMonth === currentMonth && itemYear === currentYear;
+        })
+        .reduce((sum, inv) => sum + Number(inv.amount), 0) || 0;
+
+    // Calculate total pending amount
+    const pendingAmount = list
+        ?.filter((item) => item.status?.toLowerCase() === "pending")
+        .reduce((sum, inv) => sum + Number(inv.amount), 0) || 0;
 
     // Sort data
     const sortedData = sortedDataMethod(filteredData, sortOrder);
@@ -98,7 +121,8 @@ const InvestmentTable: React.FC<InvestmentTableProps> = ({ statusFilter = "compl
                 totalAmount={totalAmount}
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
-
+                systemMonthAmount={systemMonthAmount}
+                pendingAmount={pendingAmount}
             />
 
             <InvestmentTableBody
