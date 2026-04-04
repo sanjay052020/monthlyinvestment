@@ -28,11 +28,14 @@ def get_user(user_id):
 @user_bp.route("/users", methods=["POST"])
 def add_user():
     user_data = request.json
-    user_id = user_controller.add_user(user_data)
-    return jsonify({
-        "message": "User created successfully",
-        "user_id": user_id
-    }), 201
+    try:
+        user_id = user_controller.create_user(user_data)
+        return jsonify({
+            "message": "User created successfully",
+            "user_id": user_id
+        }), 201
+    except ValueError as e:
+        return jsonify({"message": str(e)}), 400
 
 
 # UPDATE USER

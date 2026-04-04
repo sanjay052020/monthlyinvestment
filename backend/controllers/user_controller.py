@@ -3,6 +3,7 @@ from config import MONGO_URI
 from bson.objectid import ObjectId
 from bson.errors import InvalidId
 import random
+from pymongo.errors import DuplicateKeyError
 
 
 client = MongoClient(MONGO_URI)
@@ -17,7 +18,21 @@ def find_user_by_email(email):
     return users.find_one({"email": email})
 
 def create_user(user_data):
-    return users.insert_one(user_data)
+    mobile_no = user_data.get("mobile_no")
+
+    # Application-level check
+    existing_user = users.find_one({"mobile_no": mobile_no})
+    if existing_user:
+        raise ValueError("Mobile number already exists")
+
+    try:
+        result = users.insert_one(user_data)
+        return str(result.inserted_id)
+    except DuplicateKeyError:
+        # Database-level enforcement
+        raise ValueError("Mobile number already exists")
+
+
 
 def update_user_role(email, role):
     return users.update_one({"email": email}, {"$set": {"role": role}})

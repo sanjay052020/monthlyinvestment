@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./ReportGenerator.css";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { RootState } from "../../store";
 import { fetchAllInvestments } from "../../features/auth/addInvestmentSlice";
@@ -7,7 +6,7 @@ import jsPDF from "jspdf";
 import * as XLSX from "xlsx";
 import autoTable from "jspdf-autotable";
 import CircleLoader from "../common/CircleLoader";
-
+import './ReportGenerator.css';
 
 
 type Status = "form" | "loading" | "success" | "error";

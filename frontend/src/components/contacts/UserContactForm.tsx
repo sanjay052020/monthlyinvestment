@@ -58,9 +58,15 @@ const UserContactForm: React.FC = () => {
                 setShowPopup(true)
                 reset(); // clear form after success
             })
-            .catch(() => {
-                // error handled in slice
+            .catch((error) => {
+                if (error.message === "Mobile number already exists") {
+                    setShowPopup(true)
+                } else {
+                    console.error("Unexpected error:", error.message);
+                }
             });
+
+
     };
 
     return (

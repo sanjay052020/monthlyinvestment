@@ -31,19 +31,20 @@ const initialState: UserContactState = {
 
 // CREATE
 export const createUserContact = createAsyncThunk(
-    'userContact/createUserContact',
+    "userContact/createUserContact",
     async (contactData: UserContact, { rejectWithValue }) => {
         try {
-            const response = await api.post(
-                "/api/users",
-                contactData
-            );
-            return response.data;
+            const response = await api.post("/api/users", contactData);
+            return response.data; // { message, user }
         } catch (err: any) {
-            return rejectWithValue(err.response?.data || err.message);
+            const errorMessage =
+                err.response?.data?.message || err.message || "Something went wrong";
+            return rejectWithValue({ message: errorMessage });
         }
     }
 );
+
+
 
 // READ ALL
 export const fetchUserContacts = createAsyncThunk(
@@ -73,22 +74,23 @@ export const fetchUserContact = createAsyncThunk(
 
 // UPDATE
 export const updateUserContact = createAsyncThunk(
-    'userContact/updateUserContact',
+    "userContact/updateUserContact",
     async (
         { userId, contactData }: { userId: string; contactData: Partial<UserContact> },
         { rejectWithValue }
     ) => {
         try {
-            const response = await api.put(
-                `${"/api/users"}/${userId}`,
-                contactData
-            );
-            return { userId, ...response.data, contactData };
+            const response = await api.put(`/api/users/${userId}`, contactData);
+            return { userId, ...response.data, contactData }; // { message, _id, ... }
         } catch (err: any) {
-            return rejectWithValue(err.response?.data || err.message);
+            const errorMessage =
+                err.response?.data?.message || err.message || "Something went wrong";
+            return rejectWithValue({ message: errorMessage });
         }
     }
 );
+
+
 
 // DELETE
 export const deleteUserContact = createAsyncThunk(
@@ -117,24 +119,36 @@ const userContactSlice = createSlice({
             .addCase(createUserContact.pending, (state) => {
                 state.loading = true;
                 state.error = null;
+                state.lastMessage = null;
             })
             .addCase(createUserContact.fulfilled, (state, action) => {
                 state.loading = false;
                 state.lastMessage = action.payload.message;
-                state.contacts.push(action.payload);
+                if (action.payload.user) {
+                    state.contacts.push(action.payload.user);
+                }
             })
             .addCase(createUserContact.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.payload as string;
+                const errorPayload = action.payload as { message: string };
+                state.error = errorPayload.message;
+                state.lastMessage = errorPayload.message;
             })
 
             // READ ALL
+            .addCase(fetchUserContacts.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+                state.lastMessage = null;
+            })
             .addCase(fetchUserContacts.fulfilled, (state, action: PayloadAction<UserContact[]>) => {
+                state.loading = false;
                 state.contacts = action.payload;
             })
 
             // READ ONE
             .addCase(fetchUserContact.fulfilled, (state, action: PayloadAction<UserContact>) => {
+                state.loading = false;
                 state.selectedContact = action.payload;
             })
 
@@ -145,6 +159,12 @@ const userContactSlice = createSlice({
                 if (idx !== -1) {
                     state.contacts[idx] = { ...state.contacts[idx], ...action.payload.contactData };
                 }
+            })
+            .addCase(updateUserContact.rejected, (state, action) => {
+                state.loading = false;
+                const errorPayload = action.payload as { message: string };
+                state.error = errorPayload.message;
+                state.lastMessage = errorPayload.message;
             })
 
             // DELETE

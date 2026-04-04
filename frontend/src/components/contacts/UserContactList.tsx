@@ -20,9 +20,20 @@ const UserContactList: React.FC = () => {
 
   useEffect(() => {
     // Fetch all user contacts when component mounts
-    dispatch(fetchUserContacts());
+    dispatch(fetchUserContacts())
+      .unwrap()
+      .then(() => {
+        setShowPopup(false)
+      })
+      .catch((error) => {
+        if (error.message === "Mobile number already exists") {
+          setShowPopup(true)
+        } else {
+          console.error("Unexpected error:", error.message);
+        }
+      });
     setShowPopup(false);
-  }, [dispatch]);
+  }, [dispatch, error]);
 
   // Save edited contact
   const handleEditSave = (contact: any) => {

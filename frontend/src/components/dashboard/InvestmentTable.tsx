@@ -42,7 +42,7 @@ const InvestmentTable: React.FC<InvestmentTableProps> = ({ statusFilter = "compl
             // Auto-close after 3 seconds
             const timer = setTimeout(() => {
                 setShowPopup(false);
-            }, 3000);
+            }, 1000);
 
             // Cleanup to avoid memory leaks
             return () => clearTimeout(timer);
