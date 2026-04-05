@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import "./UserContactForm.css";
 import { AppDispatch, RootState } from "../../store";
-import { createUserContact } from "../../features/usercontact/userContactSlice";
+import { createUserContact, fetchUserContactByMobile } from "../../features/usercontact/userContactSlice";
 import Popup from "../Popup";
 
 // Define the shape of the form data
@@ -40,7 +40,7 @@ const UserContactForm: React.FC = () => {
     const { loading, error, lastMessage } = useSelector(
         (state: RootState) => state.userContact
     );
-
+    const [msg, setMsg] = useState('');
     const {
         register,
         handleSubmit,
@@ -50,24 +50,29 @@ const UserContactForm: React.FC = () => {
         resolver: yupResolver(schema),
     });
     const [showPopup, setShowPopup] = useState(false);
-    const onSubmit = (data: UserContact) => {
-        // Dispatch Redux thunk
-        dispatch(createUserContact(data))
-            .unwrap()
-            .then(() => {
-                setShowPopup(true)
-                reset(); // clear form after success
-            })
-            .catch((error) => {
-                if (error.message === "Mobile number already exists") {
-                    setShowPopup(true)
-                } else {
-                    console.error("Unexpected error:", error.message);
-                }
-            });
+    const onSubmit = async (data: UserContact) => {
+        try {
+            debugger
+            // First check if mobile exists
+            const existingUser = await dispatch(fetchUserContactByMobile(data.mobile)).unwrap();
 
+            if (existingUser) {
+                // Show error inline and stop submission
+                setShowPopup(true);
+                setMsg("This mobile number is already registered.")
+                return;
+            }
 
+            // If not duplicate, proceed to create
+            await dispatch(createUserContact(data)).unwrap();
+            setShowPopup(true);
+            reset();
+        } catch (error: any) {
+            console.error("Unexpected error:", error.message);
+        }
     };
+
+
 
     return (
         <form className="form-container" onSubmit={handleSubmit(onSubmit)}>
@@ -81,7 +86,7 @@ const UserContactForm: React.FC = () => {
 
             <div className="form-group">
                 <label>Mobile</label>
-                <input {...register("mobile")} />
+                <input {...register("mobile")} maxLength={10} />
                 <span className="error">{errors.mobile?.message}</span>
             </div>
 
@@ -114,7 +119,7 @@ const UserContactForm: React.FC = () => {
             </button>
 
             {showPopup && lastMessage && <Popup
-                message={lastMessage}
+                message={lastMessage ?? msg}
                 onClose={() => setShowPopup(false)}
             />}
             {error && <p className="error">{error}</p>}

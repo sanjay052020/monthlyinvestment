@@ -59,6 +59,23 @@ export const fetchUserContacts = createAsyncThunk(
     }
 );
 
+// READ ONE BY MOBILE
+export const fetchUserContactByMobile = createAsyncThunk(
+    "userContact/fetchUserContactByMobile",
+    async (mobile: string, { rejectWithValue }) => {
+        try {
+            const response = await api.get(`/api/users/mobile/${mobile}`);
+            return response.data.user; // user object if found
+        } catch (err: any) {
+            // If backend returns 404, treat as "not found" instead of error
+            if (err.response?.status === 404) {
+                return null;
+            }
+            return rejectWithValue(err.response?.data || err.message);
+        }
+    }
+);
+
 // READ ONE
 export const fetchUserContact = createAsyncThunk(
     'userContact/fetchUserContact',
@@ -133,6 +150,30 @@ const userContactSlice = createSlice({
                 const errorPayload = action.payload as { message: string };
                 state.error = errorPayload.message;
                 state.lastMessage = errorPayload.message;
+            })
+
+            //fetch Mobile no
+            .addCase(fetchUserContactByMobile.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+                state.lastMessage = null;
+            })
+            .addCase(fetchUserContactByMobile.fulfilled, (state, action: PayloadAction<UserContact | null>) => {
+                state.loading = false;
+                if (action.payload) {
+                    // User exists → duplicate mobile
+                    state.selectedContact = action.payload;
+                    state.lastMessage = "This mobile number is already registered.";
+                } else {
+                    // No user found → mobile is available
+                    state.selectedContact = null;
+                    state.lastMessage = null; // or "Mobile number is available" if you want feedback
+                }
+            })
+            .addCase(fetchUserContactByMobile.rejected, (state, action) => {
+                state.loading = false;
+                const errorPayload = action.payload as { error?: string };
+                state.error = errorPayload?.error || "User not found";
             })
 
             // READ ALL

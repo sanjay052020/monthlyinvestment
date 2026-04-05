@@ -165,7 +165,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveContent }) => {
         <div className="menu-item" onClick={() => toggleSection("billing")}>
           <div className="menu-left">
             <UserFocus size={20} />
-            <span>Users Billing</span>
+            <span>AjanNext Shop</span>
           </div>
           <div className="menu-right">
             {expandedSection === "billing" ? (
@@ -182,9 +182,9 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveContent }) => {
           </div>
         )}
 
-        <div className="menu-item" onClick={() => setActiveContent("Messages")}>
+        <div className="menu-item" onClick={() => setActiveContent("url")}>
           <div className="menu-left">
-            <ChatCircle size={20} /> Messages
+            <ChatCircle size={20} /> Important URL
           </div>
         </div>
         <div className="menu-item" onClick={() => setActiveContent("Updates")}>

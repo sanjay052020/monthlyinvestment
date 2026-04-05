@@ -1,5 +1,5 @@
 import bcrypt
-import secrets   # <-- you forgot to import this
+import secrets
 from models.user_model import (
     find_user_by_email,
     create_user,

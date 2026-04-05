@@ -14,25 +14,9 @@ users = db["users"]              # auth users
 dbusers = db["user_management"]  # contact users
 
 # ---------------- AUTH USER FUNCTIONS ----------------
-def find_user_by_email(email):
-    return users.find_one({"email": email})
 
 def create_user(user_data):
-    mobile_no = user_data.get("mobile_no")
-
-    # Application-level check
-    existing_user = users.find_one({"mobile_no": mobile_no})
-    if existing_user:
-        raise ValueError("Mobile number already exists")
-
-    try:
-        result = users.insert_one(user_data)
-        return str(result.inserted_id)
-    except DuplicateKeyError:
-        # Database-level enforcement
-        raise ValueError("Mobile number already exists")
-
-
+    return users.insert_one(user_data)
 
 def update_user_role(email, role):
     return users.update_one({"email": email}, {"$set": {"role": role}})
@@ -73,6 +57,10 @@ def fetch_user(user_id: str):
         user["_id"] = str(user["_id"])
     return user
 
+def fetch_user_by_mobile(mobile: str):
+    user = dbusers.find_one({"mobile": mobile})
+    return user
+
 def generate_user_id():
     """Generate unique 10-digit numeric ID."""
     while True:
@@ -86,8 +74,6 @@ def add_user(user_data: dict):
     result = dbusers.insert_one(user_data)
     # Only return the custom user_id, not Mongo _id
     return user_data["user_id"]
-
-
 
 def edit_user(user_id: str, user_data: dict):
     """Update contact user by ID."""

@@ -58,7 +58,7 @@ const Dashboard: React.FC = () => {
           {activeContent === "Settings" && <h2>⚙️ Settings Overview</h2>}
           {activeContent === "userdetails" && <h2><UserContactList /></h2>}
           {activeContent === "enterusers" && <h2><UserContactForm /></h2>}
-          {activeContent === "Messages" && <h2>💬 Messages Section</h2>}
+          {activeContent === "url" && <h2>💬 Url Section</h2>}
           {activeContent === "Updates" && <h2>🔔 Updates Section</h2>}
           {activeContent === "createbills" && <h2><BillingForm /></h2>}
           {activeContent === "showtransaction" && <h2><BillingTable /></h2>}
