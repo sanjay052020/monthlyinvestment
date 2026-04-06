@@ -44,11 +44,10 @@ export const addInvestment = createAsyncThunk<
                     Authorization: token ? `Bearer ${token}` : "",
                 },
             });
-
             // ✅ assume backend returns { investment: {...}, message: "Investment added successfully" }
             return {
-                investment: response.data.investment,
-                message: response.data.message,
+                investment: response.data,
+                message: "Investment added successfully",
             };
         } catch (err: any) {
             return rejectWithValue(err.response?.data?.message || "Failed to add investment");

@@ -2,23 +2,9 @@ import React, { useState } from "react";
 import { PencilSimple, Trash, Check, X } from "phosphor-react";
 import "./UserContactTable.css";
 import Pagination from "../dashboard/Pagination";
+import { Address, Props, UserContact } from "./userContact";
 
-interface UserContact {
-    user_id?: string;
-    name: string;
-    mobile: string;
-    address: string;
-    state: string;
-    city: string;
-    pin: string;
-    investment_id?: string;
-}
 
-interface Props {
-    contacts: UserContact[];
-    onEditSave: (contact: UserContact) => void;
-    onDelete: (userId: string) => void;
-}
 
 const UserContactTable: React.FC<Props> = ({ contacts, onEditSave, onDelete }) => {
     const [editRowId, setEditRowId] = useState<string | null>(null);
@@ -26,8 +12,9 @@ const UserContactTable: React.FC<Props> = ({ contacts, onEditSave, onDelete }) =
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 10;
+
     const handleEditClick = (contact: UserContact) => {
-        setEditRowId(contact.user_id || "");
+        setEditRowId(contact?.userid || "");
         setEditData({ ...contact });
     };
 
@@ -44,18 +31,24 @@ const UserContactTable: React.FC<Props> = ({ contacts, onEditSave, onDelete }) =
         setEditData(null);
     };
 
-    const handleChange = (field: keyof UserContact, value: string) => {
+    const handleChange = (field: keyof UserContact | keyof Address, value: string) => {
         if (editData) {
-            setEditData({ ...editData, [field]: value });
+            if (field in editData.address) {
+                setEditData({
+                    ...editData,
+                    address: { ...editData.address, [field]: value },
+                });
+            } else {
+                setEditData({ ...editData, [field as keyof UserContact]: value });
+            }
         }
     };
 
-    // Filter contacts by name or mobile
-    const filteredContacts = contacts && contacts.filter((contact) => {
+    // Filter contacts
+    const filteredContacts = (contacts || []).filter((contact) => {
         const name = contact?.name?.toLowerCase() || "";
         const mobile = contact?.mobile || "";
         const term = searchTerm?.toLowerCase() || "";
-
         return name.includes(term) || mobile.includes(searchTerm || "");
     });
 
@@ -65,19 +58,17 @@ const UserContactTable: React.FC<Props> = ({ contacts, onEditSave, onDelete }) =
     const endIndex = startIndex + rowsPerPage;
     const paginatedContacts = filteredContacts.slice(startIndex, endIndex);
 
-
     return (
         <div className="table-container">
             <h2 className="table-title">User Contact List</h2>
             <fieldset className="inputGroupWrapperContact">
                 <legend className="groupLegendContact">Search Input</legend>
-                {/* Search input */}
                 <input
                     type="text"
                     placeholder="Search by name or mobile..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="search-input"
+                    className="search-inputcontact"
                 />
             </fieldset>
 
@@ -88,26 +79,24 @@ const UserContactTable: React.FC<Props> = ({ contacts, onEditSave, onDelete }) =
                         <th>User ID</th>
                         <th>Name</th>
                         <th>Mobile</th>
-                        <th>Address</th>
-                        <th>State</th>
                         <th>City</th>
+                        <th>State</th>
                         <th>PIN</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {paginatedContacts.map((contact, index) => (
-                        <tr key={contact.user_id || contact.mobile}>
-                            {editRowId === contact.user_id ? (
+                        <tr key={contact.userid || contact.mobile}>
+                            {editRowId === contact.userid ? (
                                 <>
-                                    <td>{index + 1}</td>
-                                    <td>{contact.user_id}</td>
+                                    <td>{startIndex + index + 1}</td>
+                                    <td>{contact.userid}</td>
                                     <td><input value={editData?.name || ""} onChange={(e) => handleChange("name", e.target.value)} /></td>
                                     <td><input value={editData?.mobile || ""} onChange={(e) => handleChange("mobile", e.target.value)} /></td>
-                                    <td><input value={editData?.address || ""} onChange={(e) => handleChange("address", e.target.value)} /></td>
-                                    <td><input value={editData?.state || ""} onChange={(e) => handleChange("state", e.target.value)} /></td>
-                                    <td><input value={editData?.city || ""} onChange={(e) => handleChange("city", e.target.value)} /></td>
-                                    <td><input value={editData?.pin || ""} onChange={(e) => handleChange("pin", e.target.value)} /></td>
+                                    <td><input value={editData?.address.city || ""} onChange={(e) => handleChange("city", e.target.value)} /></td>
+                                    <td><input value={editData?.address.state || ""} onChange={(e) => handleChange("state", e.target.value)} /></td>
+                                    <td><input value={editData?.address.pin || ""} onChange={(e) => handleChange("pin", e.target.value)} /></td>
                                     <td className="actions">
                                         <Check size={22} className="icon save-icon" onClick={handleSave} />
                                         <X size={22} className="icon cancel-icon" onClick={handleCancel} />
@@ -115,26 +104,24 @@ const UserContactTable: React.FC<Props> = ({ contacts, onEditSave, onDelete }) =
                                 </>
                             ) : (
                                 <>
-                                    <td>{index + 1}</td>
-                                    <td>{contact.user_id}</td>
+                                    <td>{startIndex + index + 1}</td>
+                                    <td>{contact.userid}</td>
                                     <td>{contact.name}</td>
                                     <td>{contact.mobile}</td>
-                                    <td>{contact.address}</td>
-                                    <td>{contact.state}</td>
-                                    <td>{contact.city}</td>
-                                    <td>{contact.pin}</td>
+                                    <td>{contact.address.city}</td>
+                                    <td>{contact.address.state}</td>
+                                    <td>{contact.address.pin}</td>
                                     <td className="actions">
                                         <PencilSimple size={20} className="icon edit-icon" onClick={() => handleEditClick(contact)} />
-                                        <Trash size={20} className="icon delete-icon" onClick={() => contact.investment_id && onDelete(contact.investment_id)} />
+                                        <Trash size={20} className="icon delete-icon" onClick={() => onDelete(contact.userid || "")} />
                                     </td>
                                 </>
                             )}
                         </tr>
                     ))}
-
                 </tbody>
-
             </table>
+
             {totalPages > 1 && (
                 <Pagination
                     currentPage={currentPage}

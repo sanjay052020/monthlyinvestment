@@ -111,6 +111,7 @@ input[type="number"] {
   transition: border-color 0.2s ease;
 }
 
+
 .submitButton {
   width: 106%;            /* aligned with inputs */
   box-sizing: border-box;

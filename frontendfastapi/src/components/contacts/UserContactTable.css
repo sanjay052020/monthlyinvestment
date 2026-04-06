@@ -114,8 +114,8 @@
 }
 
 /* Search input styling */
-.search-input {
-  width: 100%;
+.search-inputcontact {
+  width: 93% !important;
   max-width: 300px;
   padding: 8px 12px;
   margin-bottom: 16px;
@@ -125,7 +125,7 @@
   transition: all 0.2s ease-in-out;
 }
 
-.search-input:focus {
+.search-inputcontact:focus {
   border-color: #0078d7; /* Microsoft blue accent */
   outline: none;
   box-shadow: 0 0 4px rgba(0,120,215,0.4);

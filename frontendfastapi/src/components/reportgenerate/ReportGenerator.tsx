@@ -15,8 +15,21 @@ const ReportGenerator: React.FC = () => {
     const [reportType, setReportType] = useState("Sales Report");
     const [category, setCategory] = useState("pending");
     const [format, setFormat] = useState("PDF");
-    const [fromDate, setFromDate] = useState("2026-01-01");
-    const [toDate, setToDate] = useState("2026-01-31");
+    const formatDateLocal = (date: Date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+    };
+
+    const today = new Date();
+    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+    const [fromDate, setFromDate] = useState(formatDateLocal(firstDayOfMonth));
+    const [toDate, setToDate] = useState(formatDateLocal(lastDayOfMonth));
+
+
 
     const [status, setStatus] = useState<Status>("form");
 
@@ -27,11 +40,11 @@ const ReportGenerator: React.FC = () => {
         dispatch(fetchAllInvestments());
     }, [dispatch]);
 
-    if(loading){
+    if (loading) {
         return <CircleLoader />
     }
 
-    if(error){
+    if (error) {
         return <div color="red">Error...</div>
     }
 
@@ -39,7 +52,7 @@ const ReportGenerator: React.FC = () => {
     const filterByDateRange = (data: any[], from: string, to: string) => {
         const fromTime = new Date(from).getTime();
         const toTime = new Date(to).getTime();
-        return data.filter(item=>item.status === category).filter(item => {
+        return data.filter(item => item.status === category).filter(item => {
             const itemDate = new Date(item.date).getTime(); // assuming each investment has a `date` field
             return itemDate >= fromTime && itemDate <= toTime;
         });
@@ -226,7 +239,7 @@ const ReportGenerator: React.FC = () => {
                         </select>
                     </div>
 
-                    <div className="form-group date-range">
+                    <div className="form-groupreport date-range">
                         <div className="date-field">
                             <label>From Date</label>
                             <input

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Select from "react-select";
 import styles from "./AddInvestmentForm.module.css";
 import { RootState } from "../../store";
@@ -46,28 +46,25 @@ const AddInvestmentForm: React.FC = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        dispatch(addInvestment(formData));
-    };
-
-    useEffect(() => {
-        if (message) {
-            setShowPopup(true)
-            setFormData({
-                amount: 0,
-                date: "",
-                reason: '',
-                toinvestment: "",
-                status: "pending"
+        dispatch(addInvestment(formData))
+            .unwrap()
+            .then((res) => {
+                // res should contain the new investment object with id
+                if (res?.message) {
+                    setShowPopup(true)
+                    setFormData({
+                        amount: 0,
+                        date: "",
+                        reason: '',
+                        toinvestment: "",
+                        status: "pending"
+                    })
+                }
             })
-        }
-        // Auto-close after 3 seconds
-        const timer = setTimeout(() => {
-            setShowPopup(false);
-        }, 1000);
-
-        // Cleanup to avoid memory leaks
-        return () => clearTimeout(timer);
-    }, [message])
+            .catch((err) => {
+                console.error("Failed to add investment:", err);
+            });
+    };
 
     const isFormValid =
         formData.amount > 0 &&
@@ -167,7 +164,7 @@ const AddInvestmentForm: React.FC = () => {
         {loading && <CircleLoader />}
         {showPopup && (
             <Popup
-                message={message || ""}
+                message={message ?? "Investment Added Successfully"}
                 onClose={() => setShowPopup(false)}
             />
         )}

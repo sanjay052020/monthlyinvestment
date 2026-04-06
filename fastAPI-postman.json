@@ -386,6 +386,104 @@
       }
     }
   ]
+},
+{
+
+	"name": "Loans",
+	"item": [
+    {
+      "name": "Create Loan",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"lender_id\": \"L001\",\n  \"borrower_id\": \"B001\",\n  \"amount\": 5000,\n  \"interest_rate\": 5,\n  \"due_date\": \"2026-05-01T00:00:00\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/loans",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["loans"]
+        }
+      }
+    },
+    {
+      "name": "Get All Loans",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/loans",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["loans"]
+        }
+      }
+    },
+    {
+      "name": "Get Loan By ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/loans/{{loan_id}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["loans", "{{loan_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Update Loan",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"amount\": 6000,\n  \"interest_rate\": 6\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/loans/{{loan_id}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["loans", "{{loan_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Repay Loan",
+      "request": {
+        "method": "PUT",
+        "url": {
+          "raw": "http://localhost:8000/loans/{{loan_id}}/repay",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["loans", "{{loan_id}}", "repay"]
+        }
+      }
+    },
+    {
+      "name": "Delete Loan",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "http://localhost:8000/loans/{{loan_id}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["loans", "{{loan_id}}"]
+        }
+      }
+    }
+  ]
 }
   ]
 }

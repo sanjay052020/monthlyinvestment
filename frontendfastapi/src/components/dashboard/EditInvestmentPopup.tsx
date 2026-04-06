@@ -206,7 +206,7 @@ const EditInvestmentPopup: React.FC<EditInvestmentPopupProps> = ({
                     </div>
 
                     <div className={styles.actions}>
-                        <button type="submit">Save</button>
+                        <button type="submit">Update</button>
                         <button type="button" onClick={onClose}>
                             Cancel
                         </button>

@@ -1,18 +1,25 @@
 import os
 from pymongo import MongoClient
 from dotenv import load_dotenv
+from motor.motor_asyncio import AsyncIOMotorClient
+
+
 
 # Load environment variables from .env file
 load_dotenv()
 
 # MongoDB connection string from environment
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
+DB_NAME = "finance_db"
+
+
 
 # Initialize MongoDB client
 client = MongoClient(MONGO_URI)
-
-# Select database
 db = client["monthly_investment"]
+
+clientfinance = AsyncIOMotorClient(MONGO_URI)
+dbfinance = clientfinance[DB_NAME]
 
 # Collections
 users = db["users"]
