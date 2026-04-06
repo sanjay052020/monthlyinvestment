@@ -1,0 +1,196 @@
+.billing-table {
+  margin: 20px auto;
+  max-width: 1000px;
+  font-family: 'Inter', sans-serif;
+  padding: 10px;
+}
+
+
+.billing-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+h2, h3 {
+  color: #1e0ff2;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+/* Details table */
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.details-table td {
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Style each row cell */
+.headerRow td {
+  border: 1px solid #ddd;
+  border-radius: 8px;   /* rounded corners */
+  padding: 10px 12px;
+  text-align: left;     /* align text left */
+  vertical-align: middle;
+  background-color: #fafafa;
+}
+
+/* Make the first column (labels) stand out */
+.headerRow td:first-child {
+  font-weight: 600;
+  color: #333;
+  background-color: #f0f4ff;
+  width: 200px;
+}
+
+/* Add spacing between rows */
+.headerRow {
+  margin-bottom: 8px;
+}
+
+/* Optional hover effect */
+.headerRow:hover td {
+  background-color: #eef5ff;
+  transition: background 0.2s ease;
+}
+
+
+
+.details-table td:first-child {
+  font-weight: 600;
+  color: #333;
+  width: 200px;
+}
+
+/* Products table */
+.products-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 12px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.products-table th, .products-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.products-table th {
+  background: linear-gradient(135deg, #2d7ff9, #1a5edb);
+  color: #fff;
+  font-weight: 600;
+}
+
+.products-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.products-table tr:hover {
+  background-color: #eef5ff;
+  transition: background 0.2s ease;
+}
+
+/* Error message */
+.error {
+  color: #d9534f;
+  font-weight: 600;
+  margin: 10px 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .billing-card {
+    padding: 15px;
+  }
+
+  .details-table td:first-child {
+    width: 120px;
+  }
+
+  .products-table th, .products-table td {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .billing-card {
+    padding: 12px;
+  }
+
+  .details-table, .products-table {
+    font-size: 0px;
+  }
+
+  .products-table th, .products-table td {
+    padding: 6px;
+  }
+}
+
+.billing-card {
+  background: #c381dc;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 1100px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  background: #c381dc;
+}
+
+.search-bar-Billing {
+  display: flex;
+  gap: 12px;
+  border-radius: 10px;
+  background: #d285ef;
+  box-shadow: 1px 2px 15px rgba(115, 162, 233, 0.4);
+}
+
+.search-bar-Billing input {
+  padding: 8px 12px;
+  border: 1px solid #ef7d7d;
+  border-radius: 10px;
+  font-size: 14px;
+  background: #d285ef;
+  box-shadow: 1px 2px 15px rgba(115, 162, 233, 0.4);
+}
+
+.search-bar-Billing input:focus {
+  border-color: #2d7ff9;
+  outline: none;
+  box-shadow: 0 0 4px rgba(115, 162, 233, 0.4);
+}
+
+.billing-record {
+  margin-bottom: 30px;
+}
+
+.no-results {
+  color: #d9534f;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.products-scroll-container {
+  max-height: 300px;   /* adjust as needed */
+  overflow-y: auto;
+  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+

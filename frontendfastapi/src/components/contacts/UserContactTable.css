@@ -1,0 +1,150 @@
+.table-container {
+  margin: 20px;
+  padding: 16px;
+  background: #fdfdfd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.table-title {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #592df7;
+  text-align: left;
+  border-bottom: 2px solid #0078d7;
+  padding-bottom: 8px;
+}
+
+.contact-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 14px;
+  background-color: #fff;
+}
+
+.contact-table th {
+  background-color: #0078d7;
+  color: #fff;
+  text-align: left;
+  padding: 12px;
+}
+
+.contact-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+.contact-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.contact-table tr:hover {
+  background-color: #eef6ff;
+}
+
+.contact-table input {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.contact-table input:focus {
+  border-color: #0078d7;
+  box-shadow: 0 0 4px rgba(0,120,215,0.4);
+  outline: none;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.icon {
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.icon:hover {
+  transform: scale(1.1);
+}
+
+.edit-icon:hover { color: #0078d7; }
+.delete-icon:hover { color: #d32f2f; }
+.save-icon:hover { color: #2e7d32; }
+.cancel-icon:hover { color: #f57c00; }
+
+/* Specific icon colors */
+.edit-icon {
+  color: #0078d7; /* blue */
+}
+
+.delete-icon {
+  color: #d32f2f; /* red */
+}
+
+.save-icon {
+  color: #2e7d32; /* green */
+  font-weight: bold;
+}
+
+.cancel-icon {
+  color: #f57c00; /* orange */
+  font-weight: bold;
+}
+
+
+
+/* Odd row styling */
+.contact-table tr:nth-child(odd) {
+  background-color: #e4e6e7; /* light blue-gray */
+}
+
+/* Even row styling */
+.contact-table tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+/* Hover effect */
+.contact-table tr:hover {
+  background-color: #eef6ff;
+}
+
+/* Search input styling */
+.search-input {
+  width: 100%;
+  max-width: 300px;
+  padding: 8px 12px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.search-input:focus {
+  border-color: #0078d7; /* Microsoft blue accent */
+  outline: none;
+  box-shadow: 0 0 4px rgba(0,120,215,0.4);
+}
+
+.inputGroupWrapperContact {
+  border: 2px solid #0668e7;
+  border-radius: 12px;
+  padding: 10px 10px;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
+  margin-bottom: 20px;
+}
+
+.groupLegendContact {
+  font-size: .8rem;
+  font-weight: 500;
+  color: #7a7d81;
+  padding: 0 8px;
+}

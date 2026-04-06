@@ -1,0 +1,391 @@
+{
+  "info": {
+    "name": "FastAPI Shop Management",
+    "_postman_id": "shop-management-collection-2026",
+    "description": "Collection to test FastAPI endpoints for Auth, Users, Investments, Stocks, and Bills",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:8000/auth/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:8000/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Protected (Admin only)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8000/auth/protected",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["auth", "protected"]
+            }
+          }
+        },
+        {
+          "name": "User Details",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8000/auth/user-details",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["auth", "user-details"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:8000/users/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["users"]
+            }
+          }
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8000/users/{{userid}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["users", "{{userid}}"]
+            }
+          }
+        },
+        {
+          "name": "List All Users",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8000/users/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["users"]
+            }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "http://localhost:8000/users/{{userid}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["users", "{{userid}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "http://localhost:8000/users/{{userid}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["users", "{{userid}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Investments",
+      "item": [
+        {
+          "name": "Create Investment",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:8000/investments/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["investments"]
+            }
+          }
+        },
+        {
+          "name": "List All Investments",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8000/investments/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["investments"]
+            }
+          }
+        },
+        {
+          "name": "List Investments by Month",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8000/investments/month?month=4&year=2026",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["investments", "month"],
+              "query": [
+                { "key": "month", "value": "4" },
+                { "key": "year", "value": "2026" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Investment by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8000/investments/{{investment_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["investments", "{{investment_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Investment",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "http://localhost:8000/investments/{{investment_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["investments", "{{investment_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Investment",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "http://localhost:8000/investments/{{investment_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["investments", "{{investment_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Stocks",
+      "item": [
+        {
+          "name": "Create Single Stock",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:8000/stocks/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["stocks"]
+            }
+          }
+        },
+        {
+          "name": "Create Multiple Stocks",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:8000/stocks/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["stocks"]
+            }
+          }
+        },
+        {
+          "name": "List All Stocks",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8000/stocks/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["stocks"]
+            }
+          }
+        },
+        {
+          "name": "Get Stock by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8000/stocks/{{stock_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["stocks", "{{stock_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Stock",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "http://localhost:8000/stocks/{{stock_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["stocks", "{{stock_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Stock",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "http://localhost:8000/stocks/{{stock_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["stocks", "{{stock_id}}"]
+            }
+          }
+        }
+      ]
+    },
+	{
+  "name": "Bills",
+  "item": [
+    {
+      "name": "Create Bill",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customer_name\": \"Ravi Kumar\",\n  \"customer_mobile\": \"9876543210\",\n  \"date\": \"2026-04-05\",\n  \"items\": [\n    { \"stock_id\": \"1234567890\", \"quantity\": 2, \"price\": 75000 },\n    { \"stock_id\": \"9876543210\", \"quantity\": 1, \"price\": 25000 }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/bills/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["bills"]
+        }
+      }
+    },
+    {
+      "name": "List All Bills",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/bills/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["bills"]
+        }
+      }
+    },
+    {
+      "name": "Get Bill by ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/bills/{{bill_id}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["bills", "{{bill_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Update Bill",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customer_mobile\": \"9123456789\",\n  \"items\": [\n    { \"stock_id\": \"1234567890\", \"quantity\": 3, \"price\": 74000 },\n    { \"stock_id\": \"9876543210\", \"quantity\": 2, \"price\": 24000 }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/bills/{{bill_id}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["bills", "{{bill_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Delete Bill",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "http://localhost:8000/bills/{{bill_id}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["bills", "{{bill_id}}"]
+        }
+      }
+    }
+  ]
+}
+  ]
+}

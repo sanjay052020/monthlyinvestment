@@ -5,6 +5,8 @@ from controllers.investment_controller import investment_bp
 from services.user_view import user_bp
 from services.bill_view import bill_routes
 
+
+
 app = Flask(__name__)
 
 # Allow CORS from React frontend (port 3000)

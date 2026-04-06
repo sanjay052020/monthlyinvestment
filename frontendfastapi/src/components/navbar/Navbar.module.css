@@ -1,0 +1,86 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0668e7;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  min-height: 40px;
+}
+
+.leftIcons {
+  display: flex;
+  gap: 1rem;
+}
+
+.icon {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.icon:hover {
+  transform: scale(1.1);
+}
+
+.userSection {
+  position: relative;
+}
+
+.avatarWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.avatar {
+  width: 50px;          /* ✅ make width and height equal */
+  height: 50px;
+  border-radius: 50%;   /* ✅ ensures perfect circle */
+  border: 2px solid #fff;
+  cursor: pointer;
+  object-fit: cover;    /* ✅ keeps image aspect ratio inside circle */
+}
+
+
+/* Hidden by default */
+.userDetails {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 110%;
+  background: #fff;
+  color: #333;
+  padding: 0.75rem;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  min-width: 180px;
+  z-index: 10;
+}
+
+/* Show on hover */
+.avatarWrapper:hover .userDetails {
+  display: block;
+}
+
+.userName {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.userEmail {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.logoutBtn {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.logoutBtn:hover {
+  background: #c0392b;
+}
