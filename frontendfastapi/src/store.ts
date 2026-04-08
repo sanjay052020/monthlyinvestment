@@ -8,6 +8,8 @@ import resetPasswordReducer from "./features/auth/resetPasswordSlice";
 import navbarReducer from "./features/navbar/navbarSlice";
 import userContactReducer from "./features/usercontact/userContactSlice";
 import billingReducer from "./features/billing/billingSlice";
+import loanReducer from "./features/loans/loanSlice";
+import paymentReducer from './features/loans/paymentSlice';
 
 const store = configureStore({
   reducer: {
@@ -18,8 +20,9 @@ const store = configureStore({
     resetPassword: resetPasswordReducer,
     navbar: navbarReducer,
     userContact: userContactReducer,
-    billing: billingReducer
-
+    billing: billingReducer,
+    loan: loanReducer,
+    payments: paymentReducer
   },
 });
 

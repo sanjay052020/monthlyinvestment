@@ -15,8 +15,8 @@ export const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
 
   // Month names
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
-                  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   const day = String(date.getDate()).padStart(2, "0");
   const month = months[date.getMonth()];
@@ -45,5 +45,19 @@ export const formatIndianAmount = (amount: number | string): string => {
     otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
 
   // Combine with decimal part
-  return decimalPart ? `${formattedInteger}.${decimalPart}` : formattedInteger;
+  const formattedNumber = decimalPart
+    ? `${formattedInteger}.${decimalPart}`
+    : formattedInteger;
+
+  // Add rupee symbol
+  return `₹${formattedNumber}`;
 };
+
+export const rupeesIndianAmount = (amount: number): string => {
+  return new Intl.NumberFormat("en-IN", {
+    maximumFractionDigits: 0
+  }).format(amount);
+};
+
+
+

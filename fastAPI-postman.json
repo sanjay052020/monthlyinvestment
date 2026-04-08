@@ -398,16 +398,10 @@
         "header": [
           { "key": "Content-Type", "value": "application/json" }
         ],
+        "url": { "raw": "http://localhost:8000/loans", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["loans"] },
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"lender_id\": \"L001\",\n  \"borrower_id\": \"B001\",\n  \"amount\": 5000,\n  \"interest_rate\": 5,\n  \"due_date\": \"2026-05-01T00:00:00\"\n}"
-        },
-        "url": {
-          "raw": "http://localhost:8000/loans",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8000",
-          "path": ["loans"]
+          "raw": "{\n  \"borrower_id\": \"12345\",\n  \"borrower_name\": \"John Doe\",\n  \"amount\": 10000,\n  \"interest_rate\": 2.5,\n  \"start_date\": \"2026-04-01T00:00:00\",\n  \"end_date\": \"2026-10-01T00:00:00\",\n  \"mobile\": \"9876543210\",\n  \"payments\": []\n}"
         }
       }
     },
@@ -425,62 +419,59 @@
       }
     },
     {
-      "name": "Get Loan By ID",
+      "name": "List Loans",
       "request": {
         "method": "GET",
-        "url": {
-          "raw": "http://localhost:8000/loans/{{loan_id}}",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8000",
-          "path": ["loans", "{{loan_id}}"]
-        }
+        "url": { "raw": "http://localhost:8000/loans", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["loans"] }
       }
     },
     {
-      "name": "Update Loan",
+      "name": "Get Loan",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8000/loans/{{loan_id}}", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["loans", "{{loan_id}}"] }
+      }
+    },
+    {
+      "name": "Modify Loan",
       "request": {
         "method": "PUT",
         "header": [
           { "key": "Content-Type", "value": "application/json" }
         ],
+        "url": { "raw": "http://localhost:8000/loans/{{loan_id}}", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["loans", "{{loan_id}}"] },
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"amount\": 6000,\n  \"interest_rate\": 6\n}"
-        },
-        "url": {
-          "raw": "http://localhost:8000/loans/{{loan_id}}",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8000",
-          "path": ["loans", "{{loan_id}}"]
+          "raw": "{\n  \"amount\": 12000,\n  \"interest_rate\": 3.0\n}"
+        }
+      }
+    },
+	{
+      "name": "Add Payment",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": { "raw": "http://localhost:8000/loans/{{loan_id}}/payments", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["loans", "{{loan_id}}", "payments"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"amount\": 2000,\n  \"date\": \"2026-04-07T00:00:00\",\n  \"source\": \"bank transfer\"\n}"
         }
       }
     },
     {
       "name": "Repay Loan",
       "request": {
-        "method": "PUT",
-        "url": {
-          "raw": "http://localhost:8000/loans/{{loan_id}}/repay",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8000",
-          "path": ["loans", "{{loan_id}}", "repay"]
-        }
+        "method": "POST",
+        "url": { "raw": "http://localhost:8000/loans/{{loan_id}}/repay", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["loans", "{{loan_id}}", "repay"] }
       }
     },
     {
-      "name": "Delete Loan",
+      "name": "Remove Loan",
       "request": {
         "method": "DELETE",
-        "url": {
-          "raw": "http://localhost:8000/loans/{{loan_id}}",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8000",
-          "path": ["loans", "{{loan_id}}"]
-        }
+        "url": { "raw": "http://localhost:8000/loans/{{loan_id}}", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["loans", "{{loan_id}}"] }
       }
     }
   ]

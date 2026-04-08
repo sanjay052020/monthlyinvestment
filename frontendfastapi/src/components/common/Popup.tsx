@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { CheckCircle } from "phosphor-react"; // ✅ import icon
 import "./Popup.css";
 
 interface PopupProps {
@@ -17,11 +18,8 @@ const Popup: React.FC<PopupProps> = ({ message, onClose }) => {
   // ✅ Handle keyboard events globally
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        onClose(); // close popup on Escape
-      }
-      if (e.key === "Enter") {
-        onClose(); // close popup on Enter
+      if (e.key === "Escape" || e.key === "Enter") {
+        onClose();
       }
     };
 
@@ -34,7 +32,10 @@ const Popup: React.FC<PopupProps> = ({ message, onClose }) => {
   return (
     <div className="popup-overlay" role="dialog" aria-modal="true">
       <div className="popup-box">
-        <p>{message}</p>
+        <div className="popup-message">
+          <CheckCircle size={32} color="#28a745" weight="fill" />
+          <p>{message}</p>
+        </div>
         <button ref={okButtonRef} onClick={onClose}>
           OK
         </button>

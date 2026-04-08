@@ -16,7 +16,8 @@ import {
   Plus,
   Minus,
   SignOut,
-  UserFocus
+  UserFocus,
+  CurrencyDollar 
 } from "phosphor-react";
 import "./Sidebar.css";
 import { useAppDispatch } from "../../hooks";
@@ -197,6 +198,30 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveContent }) => {
             <Lifebuoy size={20} /> Support
           </div>
         </div>
+        {/* Loans */}
+        <div className={`menu-item ${activeTab === "Loans" ? "active" : ""}`} onClick={() => toggleSection("Loans")}>
+          <div className="menu-left">
+            <CurrencyDollar size={20} />
+            <span>Loans</span>
+          </div>
+          <div className="menu-right">
+            {expandedSection === "Loans" ? (
+              <Minus size={18} weight="bold" />
+            ) : (
+              <Plus size={18} weight="bold" />
+            )}
+          </div>
+        </div>
+        {expandedSection === "Loans" && (
+          <div className="submenu">
+            <div className={`submenu-item ${activeTab === "addloan" ? "active" : ""}`} onClick={() => handleTabClick("addloan")}>
+              Add Loan Data
+            </div>
+            <div className={`submenu-item ${activeTab === "viewloan" ? "active" : ""}`} onClick={() => handleTabClick("viewloan")}>
+              View All Loans
+            </div>
+          </div>
+        )}
         <div className="menu-item" onClick={handleLogout}>
           <div className="menu-left">
             <SignOut size={20} />

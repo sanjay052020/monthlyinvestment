@@ -11,6 +11,8 @@ import UserContactForm from "../contacts/UserContactForm";
 import UserContactList from "../contacts/UserContactList";
 import { BillingForm } from "../billing/BillingForm";
 import BillingTable from "../billing/BillingTable";
+import AddLoan from "../loans/AddLoan";
+import LoanDashboard from "../loans/LoanLists";
 
 const Dashboard: React.FC = () => {
   const [activeContent, setActiveContent] = useState<string>("Home");
@@ -64,6 +66,8 @@ const Dashboard: React.FC = () => {
           {activeContent === "showtransaction" && <h2><BillingTable /></h2>}
           {activeContent === "Support" && <h2>🛟 Support Section</h2>}
           {activeContent === "todo" && <InvestmentTable statusFilter="pending" />}
+          {activeContent === "addloan" && <AddLoan />}
+          {activeContent === "viewloan" && <LoanDashboard />}
         </main>
       </div>
     </div>
