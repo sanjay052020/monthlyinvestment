@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { useAppDispatch } from "../../hooks";
-import { updateLoan, deleteLoan } from "../../features/loans/loanThunks";
-import { LoanSelction } from "../../features/loans/loanProps";
-import { formatIndianAmount } from "../../utils/formatAmount";
+import { updateLoan, deleteLoan, fetchLoans } from "../../features/loans/loanThunks";
+import { LoanSelection } from "../../features/loans/loanProps";
+import { formatDate, formatIndianAmount } from "../../utils/formatAmount";
 import LoanActions from "./LoanActions";
 import styles from "./LoanTable.module.css";
+import AddPayment from "./AddPayment";
+import { createPayment } from "../../features/loans/paymentThunk";
+
 
 interface LoanRowProps {
-    loan: LoanSelction;
+    loan: LoanSelection;
     onRowClick: () => void;
     onActionComplete: (msg: string) => void;
 }
@@ -15,7 +18,8 @@ interface LoanRowProps {
 const LoanRow: React.FC<LoanRowProps> = ({ loan, onRowClick, onActionComplete }) => {
     const dispatch = useAppDispatch();
     const [editRowId, setEditRowId] = useState<string | null>(null);
-    const [editForm, setEditForm] = useState<LoanSelction | null>(null);
+    const [editForm, setEditForm] = useState<LoanSelection | null>(null);
+    const [showPaymentPopup, setShowPaymentPopup] = useState(false);
 
     const isEditing = editRowId === loan.id;
 
@@ -48,13 +52,45 @@ const LoanRow: React.FC<LoanRowProps> = ({ loan, onRowClick, onActionComplete })
             .catch((err) => console.error("Failed to delete loan:", err));
     };
 
-    return (
-        <tr
-            className={styles.clickableRow}
-            onClick={() => {
-                if (!isEditing) onRowClick();
-            }}
-        >
+    const handleAddPaymentClick = (id: string) => {
+        setShowPaymentPopup(true); // open popup for this loan
+    };
+
+    const handlePaymentSubmit = (payment: { date: string; amount: number; source: string }) => {
+        // Dispatch with correct payload shape
+        dispatch(
+            createPayment({
+                loanId: loan.id,
+                payment: {
+                    date: payment.date,
+                    amount: payment.amount,
+                    source: payment.source,
+                },
+            })
+        )
+            .unwrap()
+            .then(() => {
+                onActionComplete("Payment added successfully");
+                setShowPaymentPopup(false);
+                dispatch(fetchLoans())
+            })
+            .catch((err) => {
+                console.error("Failed to create payment:", err);
+            });
+
+
+
+        // Example: dispatch(addPaymentToLoan({ loanId: loan.id, ...payment }))
+        onActionComplete("Payment added successfully");
+        setShowPaymentPopup(false); // close popup after submit
+    };
+
+
+
+
+
+    return (<>
+        <tr className={styles.clickableRow} onClick={() => { if (!isEditing) onRowClick(); }}>
             <td>
                 {isEditing ? (
                     <input
@@ -105,31 +141,9 @@ const LoanRow: React.FC<LoanRowProps> = ({ loan, onRowClick, onActionComplete })
                     `${loan.interest_rate}%`
                 )}
             </td>
-            <td>
-                {isEditing ? (
-                    <input
-                        value={editForm?.mobile || ""}
-                        onChange={(e) =>
-                            setEditForm((prev) => prev ? { ...prev, mobile: e.target.value } : null)
-                        }
-                    />
-                ) : (
-                    loan.mobile
-                )}
-            </td>
-            <td>
-                {isEditing ? (
-                    <input
-                        value={editForm?.status || ""}
-                        onChange={(e) =>
-                            setEditForm((prev) => prev ? { ...prev, status: e.target.value } : null)
-                        }
-                    />
-                ) : (
-                    loan.status
-                )}
-            </td>
-            <td className={styles.actions} onClick={(e) => e.stopPropagation()}>
+            <td>{isEditing ? <input value={editForm?.start_date?.split("T")[0] || ""} onChange={(e) => setEditForm((prev) => prev ? { ...prev, start_date: e.target.value } : null)} /> : formatDate(loan?.start_date?.split("T")[0])}</td>
+            <td>{isEditing ? <input value={editForm?.end_date?.split("T")[0] || ""} onChange={(e) => setEditForm((prev) => prev ? { ...prev, end_date: e.target.value } : null)} /> : formatDate(loan?.end_date?.split("T")[0])}</td>
+            <td onClick={(e) => e.stopPropagation()}>
                 <LoanActions
                     loan={loan}
                     isEditing={isEditing}
@@ -137,9 +151,14 @@ const LoanRow: React.FC<LoanRowProps> = ({ loan, onRowClick, onActionComplete })
                     onDelete={handleDelete}
                     onSave={handleSave}
                     onCancel={handleCancel}
+                    onAddPayment={handleAddPaymentClick}
                 />
             </td>
         </tr>
+        {showPaymentPopup && (
+            <AddPayment onSubmit={handlePaymentSubmit} onClose={() => setShowPaymentPopup(false)} />
+        )}
+    </>
     );
 };
 

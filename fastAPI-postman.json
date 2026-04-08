@@ -387,8 +387,7 @@
     }
   ]
 },
-{
-
+	{
 	"name": "Loans",
 	"item": [
     {
@@ -474,7 +473,91 @@
         "url": { "raw": "http://localhost:8000/loans/{{loan_id}}", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["loans", "{{loan_id}}"] }
       }
     }
-  ]
-}
-  ]
+		]
+	},
+	{
+		"name": "Urls",
+		"item": [
+    {
+      "name": "Create URL",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"url\": \"https://example.com\",\n  \"comments\": \"Sample site\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/urls/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["urls", ""]
+        }
+      }
+    },
+    {
+      "name": "List URLs",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/urls/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["urls", ""]
+        }
+      }
+    },
+    {
+      "name": "Get URL by ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/urls/{{url_id}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["urls", "{{url_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Update URL",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"comments\": \"Updated comment\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/urls/{{url_id}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["urls", "{{url_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Delete URL",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "http://localhost:8000/urls/{{url_id}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["urls", "{{url_id}}"]
+        }
+      }
+    }
+		]
+	}
+		  ]
 }

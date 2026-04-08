@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Loan, LoanSelction, Payment } from './loanProps';
+import { Loan, LoanSelection, Payment } from './loanProps';
 import api from '../../api';
 
 // Fetch all loans
@@ -23,7 +23,7 @@ export const fetchLoan = createAsyncThunk<Loan, string>(
 // Create loan
 
 export const createLoan = createAsyncThunk<
-  { message: string; loan: LoanSelction }, // return type
+  { message: string; loan: LoanSelection }, // return type
   Loan // arg type
 >(
   "loan/createLoan",
@@ -31,7 +31,7 @@ export const createLoan = createAsyncThunk<
     const res = await api.post("/loans", loan);
 
     // If backend returns loan fields at the root, not inside res.data.loan
-    const normalized: LoanSelction = {
+    const normalized: LoanSelection = {
       ...res.data,
       id: res.data.id ?? res.data.borrower_id, // ensure id is always set
     };
@@ -45,18 +45,19 @@ export const createLoan = createAsyncThunk<
 
 // Update loan
 export const updateLoan = createAsyncThunk<
-  { message: string; loan: LoanSelction }, // return type
-  { id: string; data: Partial<LoanSelction> } // arg type
+  { message: string; loan: LoanSelection }, // return type
+  { id: string; data: Partial<LoanSelection> } // arg type
 >(
   "loan/updateLoan",
   async ({ id, data }) => {
+    debugger
     const res = await api.put(`/loans/${id}`, data);
     return {
       message: res.data.message,
       loan: {
         ...res.data.loan,
         id: res.data.loan.id ?? res.data.loan.borrower_id, // normalize id
-      } as LoanSelction,
+      } as LoanSelection,
     };
   }
 );

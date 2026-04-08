@@ -29,7 +29,7 @@ export interface LoanUpdate {
   payments?: Payment[];
 }
 
-export interface LoanSelction {
+export interface LoanSelection {
   id: string;              // required
   borrower_id: string;
   borrower_name: string;
@@ -42,13 +42,6 @@ export interface LoanSelction {
   total_amount?: number;
   months?: number;
   mobile: string;
-}
-
-// loanSlice.ts
-interface LoanState {
-  loans: LoanSelction[];   // ✅ use LoanSelction[]
-  loading: boolean;
-  error?: string;
 }
 
 

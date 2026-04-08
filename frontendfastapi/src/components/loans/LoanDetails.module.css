@@ -10,6 +10,7 @@
   align-items: center;
   z-index: 1000;
   font-family: 'Times New Roman', Times, serif;
+  overflow-y: auto; /* ✅ allow overlay itself to scroll if needed */
 }
 
 .box {
@@ -18,8 +19,18 @@
   padding: 20px 24px;
   max-width: 600px;
   width: 90%;
+  max-height: 90vh;       /* ✅ limit height to viewport */
+  overflow-y: auto;       /* ✅ scroll inside the box if content is long */
   box-shadow: 0 4px 12px rgba(0,0,0,0.25);
   animation: fadeIn 0.3s ease;
+}
+
+@media (max-width: 480px) {
+  .box {
+    width: 95%;
+    padding: 16px;
+    font-size: 0.9rem;
+  }
 }
 
 .box h3, .box h4 {

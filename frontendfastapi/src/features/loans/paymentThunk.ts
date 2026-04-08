@@ -2,15 +2,26 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Payment } from './loanProps';
 import api from '../../api';
 
+interface AddPaymentProps {
+  date: string;
+  amount: number;
+  source: string;
+}
+
+
 // Create payment
-export const createPayment = createAsyncThunk<{ message: string }, Payment>(
-  'loan/createPayment',
-  async (id, payment) => {
-    debugger
-    const res = await api.post(`/loans/${id}/payments`, payment);
-    return res.data;
+export const createPayment = createAsyncThunk<
+  Payment, // return type is Payment
+  { loanId: string; payment: AddPaymentProps } // argument type
+>(
+  "loan/createPayment",
+  async ({ loanId, payment }) => {
+    const res = await api.post(`/loans/${loanId}/payments`, payment);
+    return res.data as Payment; // assume API returns the created payment
   }
 );
+
+
 
 export const updatePayment = createAsyncThunk<
   { message: string; loan: any }, // return type

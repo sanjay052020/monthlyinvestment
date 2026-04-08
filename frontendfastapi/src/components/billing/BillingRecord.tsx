@@ -16,7 +16,7 @@ interface BillingRecordProps {
 const BillingRecord: React.FC<BillingRecordProps> = ({ bill, onSave, onDelete }) => {
     const [loadingOnScroll, setLoadingOnScroll] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
-    const [editedBill, setEditedBill] = useState<Bill>(bill);
+    const [editedBill, setEditedBill] = useState<Bill>(bill || []);
     const dispatch = useAppDispatch();
 
     const handleChange = (field: keyof Bill, value: string) => {
@@ -167,7 +167,7 @@ const BillingRecord: React.FC<BillingRecordProps> = ({ bill, onSave, onDelete })
                         </tr>
                     </thead>
                     <tbody>
-                        {editedBill.products.map((p, idx) => (
+                        {editedBill?.products?.length > 0 && editedBill?.products.map((p, idx) => (
                             <tr key={idx}>
                                 <td>{isEditing ? <input type="text" value={p.name} onChange={(e) => handleProductChange(idx, "name", e.target.value)} /> : p.name}</td>
                                 <td>{isEditing ? <input type="text" value={p.productId} onChange={(e) => handleProductChange(idx, "productId", e.target.value)} /> : p.productId}</td>

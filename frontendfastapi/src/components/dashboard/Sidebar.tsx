@@ -10,14 +10,16 @@ import {
   LockSimple,
   PuzzlePiece,
   CreditCard,
-  ChatCircle,
   Bell,
   Lifebuoy,
   Plus,
   Minus,
   SignOut,
   UserFocus,
-  CurrencyDollar 
+  CurrencyDollar,
+  Link,
+  ShareNetwork,
+  GlobeSimple
 } from "phosphor-react";
 import "./Sidebar.css";
 import { useAppDispatch } from "../../hooks";
@@ -183,11 +185,27 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveContent }) => {
           </div>
         )}
 
-        <div className="menu-item" onClick={() => setActiveContent("url")}>
+        {/* Important URL */}
+        <div className="menu-item" onClick={() => toggleSection("url")}>
           <div className="menu-left">
-            <ChatCircle size={20} /> Important URL
+            <Link size={20} />
+            <span>Important URLs</span>
+          </div>
+          <div className="menu-right">
+            {expandedSection === "url" ? (
+              <Minus size={18} weight="bold" />
+            ) : (
+              <Plus size={18} weight="bold" />
+            )}
           </div>
         </div>
+        {expandedSection === "url" && (
+          <div className="submenu">
+            <div className={`submenu-item ${activeTab === "createurl" ? "active" : ""}`} onClick={() => handleTabClick("createurl")}><ShareNetwork size={18} />Create URLs</div>
+            <div className={`submenu-item ${activeTab === "viewurl" ? "active" : ""}`} onClick={() => handleTabClick("viewurl")}><GlobeSimple size={18} />View URLs</div>
+          </div>
+        )}
+
         <div className="menu-item" onClick={() => setActiveContent("Updates")}>
           <div className="menu-left">
             <Bell size={20} /> Updates

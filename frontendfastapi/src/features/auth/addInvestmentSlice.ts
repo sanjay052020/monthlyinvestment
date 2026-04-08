@@ -64,8 +64,7 @@ export const updateInvestment = createAsyncThunk<
     "investment/updateInvestment",
     async (investmentData, { rejectWithValue }) => {
         try {
-            const token = Cookies.get("authToken");
-            debugger
+            const token = Cookies.get("token");
             // ✅ remove _id from body
             const { investment_id, ...payload } = investmentData;
 
@@ -118,7 +117,6 @@ export const deleteInvestment = createAsyncThunk<
   { rejectValue: string }
 >("investment/deleteInvestment", async (investment_id, { rejectWithValue }) => {
   try {
-    debugger
     await api.delete(`/investments/${investment_id}`);
     return investment_id; // return deleted id so we can remove from state
   } catch (err: any) {

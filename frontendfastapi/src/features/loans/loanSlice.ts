@@ -8,11 +8,11 @@ import {
     repayLoan,
     deleteLoan,
 } from './loanThunks';
-import { LoanSelction } from './loanProps';
+import { LoanSelection } from './loanProps';
 
 interface LoanState {
-    loans: LoanSelction[];   // ✅ use LoanSelction[]
-    selectedLoan?: LoanSelction;
+    loans: LoanSelection[];   // ✅ use LoanSelction[]
+    selectedLoan?: LoanSelection;
     loading: boolean;
     error?: string;
 }
@@ -41,7 +41,7 @@ const loanSlice = createSlice({
                 state.loans = action.payload.map((loan: any) => ({
                     ...loan,
                     id: loan.id ?? loan.borrower_id, // fallback if id missing
-                })) as LoanSelction[];
+                })) as LoanSelection[];
             })
             .addCase(fetchLoans.rejected, (state, action) => {
                 state.loading = false;
@@ -53,7 +53,7 @@ const loanSlice = createSlice({
                 state.selectedLoan = {
                     ...action.payload,
                     id: action.payload.id ?? action.payload.borrower_id,
-                } as LoanSelction;
+                } as LoanSelection;
             })
 
             // Create loan
@@ -75,7 +75,7 @@ const loanSlice = createSlice({
                 const updated = {
                     ...action.payload.loan,
                     id: action.payload.loan.id ?? action.payload.loan.borrower_id,
-                } as LoanSelction;
+                } as LoanSelection;
                 const index = state.loans.findIndex((l) => l.id === updated.id);
                 if (index !== -1) state.loans[index] = updated;
             })
@@ -85,7 +85,7 @@ const loanSlice = createSlice({
                 const updated = {
                     ...action.payload.loan,
                     id: action.payload.loan.id ?? action.payload.loan.borrower_id,
-                } as LoanSelction;
+                } as LoanSelection;
                 const index = state.loans.findIndex((l) => l.id === updated.id);
                 if (index !== -1) state.loans[index] = updated;
             })
@@ -95,7 +95,7 @@ const loanSlice = createSlice({
                 const updated = {
                     ...action.payload.loan,
                     id: action.payload.loan.id ?? action.payload.loan.borrower_id,
-                } as LoanSelction;
+                } as LoanSelection;
                 const index = state.loans.findIndex((l) => l.id === updated.id);
                 if (index !== -1) state.loans[index] = updated;
             })

@@ -6,6 +6,7 @@ from services.investment_view import router as investment_view
 from services.stock_view import router as stock_view
 from services.bill_view import router as bill_view
 from services.loan_service import router as loan_view
+from services.url_view import router as url_view
 
 app = FastAPI(title="Secure FastAPI Auth")
 
@@ -31,3 +32,4 @@ app.include_router(investment_view)
 app.include_router(stock_view)
 app.include_router(bill_view)
 app.include_router(loan_view)
+app.include_router(url_view)

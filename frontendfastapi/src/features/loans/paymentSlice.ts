@@ -29,7 +29,7 @@ const paymentSlice = createSlice({
       // Fulfilled
       .addCase(createPayment.fulfilled, (state, action) => {
         state.loading = false;
-        state.payments.push(action.meta.arg); // use payload returned from thunk
+        state.payments.push(action.payload); // use payload returned from thunk
       })
 
       // Rejected

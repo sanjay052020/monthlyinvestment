@@ -54,7 +54,7 @@ async def get_loan(loan_id: str):
     return loan_helper(loan) if loan else None
 
 async def modify_loan(loan_id: str, data: LoanUpdate):
-    update_data = {k: v for k, v in data.dict().items() if v is not None}
+    update_data = {k: v for k, v in data.dict(exclude={"payments"}).items() if v is not None}
     await collection.update_one({"_id": ObjectId(loan_id)}, {"$set": update_data})
     return await get_loan(loan_id)
 

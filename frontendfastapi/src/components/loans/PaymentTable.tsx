@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Payment } from "../../features/loans/loanProps";
 import styles from "./PaymentTable.module.css";
-import { formatIndianAmount } from "../../utils/formatAmount";
+import { formatDate, formatIndianAmount } from "../../utils/formatAmount";
 import { PencilSimple, Trash, Check, XCircle } from "phosphor-react";
 
 interface PaymentTableProps {
@@ -33,8 +33,18 @@ const PaymentTable: React.FC<PaymentTableProps> = ({ loanId, payments, onDeleteP
     setEditForm(null);
   };
 
+  // ✅ Calculate total amount
+  const totalAmount = payments.reduce((sum, p) => sum + p.amount, 0);
+
   return (
-    <div>
+    <>
+      {/* ✅ Show total at top */}
+      <div className={styles.totalAmount}>
+        <fieldset className="inputGroupWrapper">
+          <legend className="groupLegend">Total Payments Amount</legend>
+          <strong>Total Paid:</strong> {formatIndianAmount(totalAmount)}
+        </fieldset>
+      </div>
       {payments && payments.length > 0 ? (
         <table className={styles.paymentsTable}>
           <thead>
@@ -62,7 +72,7 @@ const PaymentTable: React.FC<PaymentTableProps> = ({ loanId, payments, onDeleteP
                         }
                       />
                     ) : (
-                      payment.date?.slice(0, 10)
+                      formatDate(payment.date?.slice(0, 10))
                     )}
                   </td>
                   <td>
@@ -115,7 +125,7 @@ const PaymentTable: React.FC<PaymentTableProps> = ({ loanId, payments, onDeleteP
       ) : (
         <p>No payments recorded yet.</p>
       )}
-    </div>
+    </>
   );
 };
 

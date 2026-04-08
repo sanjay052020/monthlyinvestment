@@ -1,15 +1,16 @@
 import React from "react";
-import { LoanSelction } from "../../features/loans/loanProps";
-import { PencilSimple, Trash, Check, X } from "phosphor-react";
+import { LoanSelection } from "../../features/loans/loanProps";
+import { PencilSimple, Trash, Check, X, PlusCircle } from "phosphor-react";
 import styles from "./LoanActions.module.css";
 
 interface LoanActionsProps {
-  loan: LoanSelction;
+  loan: LoanSelection;
   isEditing: boolean;
-  onEdit: (loan: LoanSelction) => void;
+  onEdit: (loan: LoanSelection) => void;
   onDelete: (id: string) => void;
   onSave: () => void;
   onCancel: () => void;
+  onAddPayment: (id: string) => void;
 }
 
 const LoanActions: React.FC<LoanActionsProps> = ({
@@ -19,6 +20,7 @@ const LoanActions: React.FC<LoanActionsProps> = ({
   onDelete,
   onSave,
   onCancel,
+  onAddPayment,
 }) => {
   return (
     <div className={styles.actions}>
@@ -33,11 +35,14 @@ const LoanActions: React.FC<LoanActionsProps> = ({
         </>
       ) : (
         <>
-          <button className={styles.iconButton} onClick={() => onEdit(loan)}>
+          <button className={styles.iconButton} onClick={() => onEdit(loan)} title="Edit Loans">
             <PencilSimple size={20} />
           </button>
-          <button className={styles.iconButton} onClick={() => onDelete(loan.id)}>
+          <button className={styles.iconButton} onClick={() => onDelete(loan.id)} title="Delete Loans">
             <Trash size={20} />
+          </button>
+          <button className={styles.iconButton} onClick={() => onAddPayment(loan.id)} title="Add Payments">
+            <PlusCircle size={20} />
           </button>
         </>
       )}

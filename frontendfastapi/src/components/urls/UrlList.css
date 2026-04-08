@@ -1,0 +1,144 @@
+.url-card {
+  background: #1f2937; /* dark gray card */
+  color: #f9fafb;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  max-width: 800px;
+  margin: 2rem auto;
+  border: 1px solid blue;
+}
+
+.url-title {
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.url-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #111827;
+  border-radius: 6px;
+  overflow: hidden;
+  font-size: 15px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.url-table th,
+.url-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border: 1px solid #ffffff;
+}
+
+.url-table th {
+  background: #374151;
+  font-weight: bold;
+  color: #f9fafb;
+}
+
+.url-table tr:nth-child(even) {
+  background: #1f2937;
+}
+
+.url-table tr:hover {
+  background: #4b5563;
+}
+
+.url-table a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.url-table a:hover {
+  text-decoration: underline;
+}
+
+.actions-cell {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  color: #f9fafb;
+}
+
+.action-btn:hover {
+  background-color: #374151;
+}
+
+.edit-btn {
+  color: #3b82f6; /* blue for edit */
+}
+
+.edit-btn:hover {
+  background-color: #1e40af;
+  color: #fff;
+}
+
+.delete-btn {
+  color: #ef4444; /* red for delete */
+}
+
+.delete-btn:hover {
+  background-color: #7f1d1d;
+  color: #fff;
+}
+.edit-input {
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #374151;
+  background: #111827;
+  color: #f9fafb;
+  font-size: 0.9rem;
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: #1f2937;
+}
+
+.actions-cell {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.action-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  color: #f9fafb;
+}
+
+.action-btn:hover {
+  background-color: #374151;
+}
+
+.edit-btn {
+  color: #3b82f6;
+}
+
+.delete-btn {
+  color: #ef4444;
+}
+
+.save-btn {
+  color: #10b981; /* green */
+}
+
+.cancel-btn {
+  color: #f59e0b; /* amber */
+}

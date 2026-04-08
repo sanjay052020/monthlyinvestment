@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppDispatch } from "../../hooks";
 import { fetchLoans, fetchLoan } from "../../features/loans/loanThunks";
-import { LoanSelction } from "../../features/loans/loanProps";
+import { LoanSelection } from "../../features/loans/loanProps";
 import styles from "./LoanTable.module.css";
 import CircleLoader from "../common/CircleLoader";
 import LoanRow from "./LoanRow";
@@ -9,12 +9,13 @@ import Popup from "../common/Popup";
 
 interface LoanTableProps {
     query: string;
-    onRowClick: (loan: LoanSelction) => void;
+    onRowClick: (loan: LoanSelection) => void;
+    loans: LoanSelection[];
+    loading: boolean;
 }
 
-const LoanTable: React.FC<LoanTableProps> = ({ query, onRowClick }) => {
+const LoanTable: React.FC<LoanTableProps> = ({ query, onRowClick, loading, loans }) => {
     const dispatch = useAppDispatch();
-    const { loans, loading } = useAppSelector((state) => state.loan);
 
     const [showPopup, setShowPopup] = useState(false);
     const [popupMsg, setPopupMsg] = useState("");
@@ -25,7 +26,7 @@ const LoanTable: React.FC<LoanTableProps> = ({ query, onRowClick }) => {
     }, [dispatch]);
 
     const normalizedQuery = query.toLowerCase();
-    const filteredLoans = loans.filter((loan: LoanSelction) => {
+    const filteredLoans = loans.filter((loan: LoanSelection) => {
         const borrowerId = loan.borrower_id?.toLowerCase() || "";
         const borrowerName = loan.borrower_name?.toLowerCase() || "";
         return borrowerId.includes(normalizedQuery) || borrowerName.includes(normalizedQuery);
@@ -42,9 +43,9 @@ const LoanTable: React.FC<LoanTableProps> = ({ query, onRowClick }) => {
                         <th>Name</th>
                         <th>Amount</th>
                         <th>Interest Rate</th>
-                        <th>Mobile</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th style={{display: "flex", justifyContent: "center"}}>Actions</th>
                     </tr>
                 </thead>
                 <tbody>

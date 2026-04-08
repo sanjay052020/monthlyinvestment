@@ -68,7 +68,6 @@ export const deleteBill = createAsyncThunk(
 export const deleteProductFromBill = createAsyncThunk(
     "billing/deleteProductFromBill",
     async ({ billing_id, product_id }: { billing_id: string; product_id: string }) => {
-        debugger
         const response = await api.delete(
             `/bills/${billing_id}/products/${product_id}`
         );

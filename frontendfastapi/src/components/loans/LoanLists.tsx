@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import LoanTable from "./LoanTable";
 import LoanSearch from "./LoanSearch";
 import LoanDetails from "./LoanDetails";
-import { Loan, Payment } from "../../features/loans/loanProps";
+import { Loan, LoanSelection, Payment } from "../../features/loans/loanProps";
 import styles from "./LoanDashboard.module.css";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { fetchLoan } from "../../features/loans/loanThunks"; // ✅ import updatePayment
@@ -13,6 +13,10 @@ const LoanDashboard: React.FC = () => {
   const [selectedLoan, setSelectedLoan] = useState<Loan | null>(null);
 
   const dispatch = useAppDispatch();
+  const { loans, loading } = useAppSelector((state) => state.loan);
+  const [localLoans, setLocalLoans] = useState<LoanSelection[]>([]);
+
+
 
   // ✅ Update handler with optimistic update
   const handleUpdatePayment = (loanId: string, paymentId: string, updated: Payment) => {
@@ -21,8 +25,19 @@ const LoanDashboard: React.FC = () => {
         p.id === paymentId ? updated : p
       );
 
+      const updatedLoan: LoanSelection = {
+        ...selectedLoan,
+        id: selectedLoan.id!, // non-null assertion
+        payments: updatedPayments,
+      };
+
       // ✅ Correct object spread
       setSelectedLoan({ ...selectedLoan, payments: updatedPayments });
+
+      // ✅ update localLoans immediately
+      setLocalLoans(prev =>
+        prev.map(l => (l.id === loanId ? updatedLoan : l))
+      );
 
       dispatch(updatePayment({ loanId, paymentId, data: updated }))
         .unwrap()
@@ -37,7 +52,19 @@ const LoanDashboard: React.FC = () => {
       // ✅ Optimistically update local state
       const updatedPayments = selectedLoan.payments.filter(p => p.id !== paymentId);
       setSelectedLoan({ ...selectedLoan, payments: updatedPayments });
+
+      const updatedLoan: LoanSelection = {
+        ...selectedLoan,
+        id: selectedLoan.id!, // non-null assertion
+        payments: updatedPayments,
+      };
+
+      // ✅ update localLoans immediately
+      setLocalLoans(prev =>
+        prev.map(l => (l.id === loanId ? updatedLoan : l))
+      );
     }
+
 
     // ✅ Dispatch delete to backend
     dispatch(deletePayment({ loanId, paymentId }))
@@ -54,6 +81,11 @@ const LoanDashboard: React.FC = () => {
     }
   }, [dispatch, selectedLoan?.id]);
 
+  useEffect(() => {
+    setLocalLoans(loans);
+  }, [loans]);
+
+
   return (
     <div className={styles.dashboard}>
       <span className={styles.loanTitle}>Loan Management Dashboard</span>
@@ -62,7 +94,12 @@ const LoanDashboard: React.FC = () => {
       <LoanSearch query={query} setQuery={setQuery} />
 
       {/* Table of loans */}
-      <LoanTable query={query} onRowClick={setSelectedLoan} />
+      <LoanTable
+        query={query}
+        onRowClick={setSelectedLoan}
+        loans={localLoans}
+        loading={loading}
+      />
 
       {/* Popup details */}
       {selectedLoan && (

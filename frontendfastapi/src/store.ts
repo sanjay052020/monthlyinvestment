@@ -10,6 +10,7 @@ import userContactReducer from "./features/usercontact/userContactSlice";
 import billingReducer from "./features/billing/billingSlice";
 import loanReducer from "./features/loans/loanSlice";
 import paymentReducer from './features/loans/paymentSlice';
+import urlReducer from './features/urls/urlSlice';
 
 const store = configureStore({
   reducer: {
@@ -22,7 +23,8 @@ const store = configureStore({
     userContact: userContactReducer,
     billing: billingReducer,
     loan: loanReducer,
-    payments: paymentReducer
+    payments: paymentReducer,
+    urls: urlReducer,
   },
 });
 
