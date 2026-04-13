@@ -1,6 +1,0 @@
-[
-    { "value": "Cash", "label": "Cash" },
-    { "value": "UPI", "label": "UPI" },
-    { "value": "Credit Card", "label": "Credit Card" },
-    { "value": "Debit Card", "label": "Debit Card" }
-]
