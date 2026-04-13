@@ -22,9 +22,9 @@ const EditInvestmentPopup: React.FC<EditInvestmentPopupProps> = ({
     onSave,
 }) => {
     const [formData, setFormData] = useState<Investment>({
-        _id: "",
+        investment_id: "",
         amount: 0,
-        toInvestment: "",
+        toinvestment: "",
         date: "",
         reason: "",
         status: "",
@@ -47,7 +47,7 @@ const EditInvestmentPopup: React.FC<EditInvestmentPopupProps> = ({
     const handleSelectChange = (option: any) => {
         setFormData((prev) => ({
             ...prev,
-            toInvestment: option ? option.value : "",
+            toinvestment: option ? option.value : "",
         }));
     };
 
@@ -84,13 +84,13 @@ const EditInvestmentPopup: React.FC<EditInvestmentPopupProps> = ({
                         </label>
                     </div>
 
-                    {/* ✅ react-select for toInvestment */}
+                    {/* ✅ react-select for toinvestment */}
                     <div className={styles.formGroup}>
                         <label className={styles.formLabel}>To Investment:</label>
                         <Select
                             options={investmentOptions}
                             value={investmentOptions.find(
-                                (opt: OptionType) => opt.value === formData.toInvestment
+                                (opt: OptionType) => opt.value === formData.toinvestment
                             )}
                             onChange={handleSelectChange}
                             classNamePrefix="react-select"
@@ -150,6 +150,7 @@ const EditInvestmentPopup: React.FC<EditInvestmentPopupProps> = ({
                                 name="reason"
                                 value={formData.reason}
                                 onChange={handleChange}
+                                className={styles.reasonInput}
                             />
                         </label>
                     </div>
@@ -206,8 +207,8 @@ const EditInvestmentPopup: React.FC<EditInvestmentPopupProps> = ({
                     </div>
 
                     <div className={styles.actions}>
-                        <button type="submit">Save</button>
-                        <button type="button" onClick={onClose}>
+                        <button type="submit">Update</button>
+                        <button type="button" onClick={onClose} className={styles.cancelbutton}>
                             Cancel
                         </button>
                     </div>

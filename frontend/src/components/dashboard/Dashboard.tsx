@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Sidebar from "./Sidebar";
 import AddInvestmentForm from "./AddInvestmentForm";
 import InvestmentTable from "./InvestmentTable";
 import ReportGenerator from "../reportgenerate/ReportGenerator";
@@ -11,6 +10,13 @@ import UserContactForm from "../contacts/UserContactForm";
 import UserContactList from "../contacts/UserContactList";
 import { BillingForm } from "../billing/BillingForm";
 import BillingTable from "../billing/BillingTable";
+import AddLoan from "../loans/AddLoan";
+import LoanDashboard from "../loans/LoanLists";
+import Sidebar from "../Sidebar/Sidebar";
+import UrlForm from "../urls/UrlForm";
+import UrlList from "../urls/UrlList";
+import Uploads from "../uploads/Uploads";
+import UploadPage from "../uploads/UploadPage";
 
 const Dashboard: React.FC = () => {
   const [activeContent, setActiveContent] = useState<string>("Home");
@@ -36,7 +42,7 @@ const Dashboard: React.FC = () => {
 
       <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
         {/* ✅ Navbar sits at the top of the right side */}
-        <Navbar avatarUrl="/images/photo-latest.jpg" />
+        <Navbar avatarUrl="/images/photo-latest.png" />
 
         {/* Main Content */}
         <main
@@ -58,12 +64,16 @@ const Dashboard: React.FC = () => {
           {activeContent === "Settings" && <h2>⚙️ Settings Overview</h2>}
           {activeContent === "userdetails" && <h2><UserContactList /></h2>}
           {activeContent === "enterusers" && <h2><UserContactForm /></h2>}
-          {activeContent === "url" && <h2>💬 Url Section</h2>}
-          {activeContent === "Updates" && <h2>🔔 Updates Section</h2>}
+          {activeContent === "createurl" && <h2><UrlForm /></h2>}
+          {activeContent === "viewurl" && <h2><UrlList /></h2>}
           {activeContent === "createbills" && <h2><BillingForm /></h2>}
           {activeContent === "showtransaction" && <h2><BillingTable /></h2>}
           {activeContent === "Support" && <h2>🛟 Support Section</h2>}
           {activeContent === "todo" && <InvestmentTable statusFilter="pending" />}
+          {activeContent === "addloan" && <AddLoan />}
+          {activeContent === "viewloan" && <LoanDashboard />}
+          {activeContent === "upload" && <h2><UploadPage /></h2>}
+          {activeContent === "download" && <h2><Uploads /></h2>}
         </main>
       </div>
     </div>

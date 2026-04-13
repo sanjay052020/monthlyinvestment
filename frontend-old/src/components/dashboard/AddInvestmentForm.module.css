@@ -1,0 +1,121 @@
+.formContainer {
+  max-width: 320px;
+  margin-left: 5px;
+  background: #ffffff;
+  padding: 0 4rem 4rem 4rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(1, 1, 1, 0.15);
+  font-family: 'Inter', sans-serif;
+  border: 2px solid #0668e7;
+}
+
+.formTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: center;
+  color: #4e08fd;
+}
+
+.formGroup {
+  margin-bottom: 1.25rem;
+}
+
+.formLabel {
+  display: flex;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #0a0a0a;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.formInput,
+.formSelect,
+.formTextarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #f9f9f9;
+  transition: border-color 0.2s ease;
+}
+
+
+.formInput:focus,
+.formSelect:focus,
+.formTextarea:focus {
+  border-color: #0668e7;
+  outline: none;
+  background: #fff;
+}
+
+.formTextarea {
+  resize: vertical;
+}
+
+.submitButton {
+  width: 106%;
+  padding: 0.75rem;
+  background: #0668e7;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.submitButton:hover:enabled {
+  background-color: #005a9e;
+}
+
+.submitButton:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;      /* greyed out when disabled */
+}
+
+.react-select__control {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #f9f9f9;
+
+}
+
+.react-select__single-value {
+  text-align: left;
+  color: #333;
+}
+
+.react-select__menu {
+  width: 100%;
+}
+
+
+.react-select__control--is-focused {
+  border-color: #0668e7;
+  box-shadow: 0 0 0 1px #0668e7;
+}
+
+.react-select__option {
+  text-align: left;
+  padding-left: 0.75rem;
+}
+
+
+.react-select__option--is-focused {
+  background: #e6f0ff;
+}
+
+.react-select__option--is-selected {
+  background: #0668e7;
+  color: #fff;
+}
+
+.react-select__placeholder {
+  text-align: left;
+  color: #888;
+}

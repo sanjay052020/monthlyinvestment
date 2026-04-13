@@ -1,27 +1,46 @@
-from flask import Flask
-from flask_cors import CORS
-from controllers.auth_controller import auth_bp
-from controllers.investment_controller import investment_bp
-from services.user_view import user_bp
-from services.bill_view import bill_routes
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from services.auth_view import router as auth_router
+from services.user_view import router as user_router
+from services.investment_view import router as investment_view
+from services.stock_view import router as stock_view
+from services.bill_view import router as bill_view
+from services.loan_service import router as loan_view
+from services.url_view import router as url_view
+from services.file_view import router as file_router
+from fastapi.staticfiles import StaticFiles
 
 
 
-app = Flask(__name__)
+app = FastAPI(title="Secure FastAPI Auth")
 
-# Allow CORS from React frontend (port 3000)
-CORS(
-    app,
-    resources={r"/*": {"origins": "http://localhost:3000"}},
-    supports_credentials=True
+# Configure CORS
+origins = [
+    "http://localhost:3000",   # React dev server
+    "http://127.0.0.1:3000",
+    # Add production frontend domain here, e.g. "https://myapp.com"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,          # allowed origins
+    allow_credentials=True,         # allow cookies/headers
+    allow_methods=["*"],            # allow all HTTP methods
+    allow_headers=["*"],            # allow all headers
 )
 
-# Register Blueprints
-app.register_blueprint(auth_bp, url_prefix="/auth")
-app.register_blueprint(investment_bp, url_prefix="/investment")
-app.register_blueprint(user_bp, url_prefix="/api")
-app.register_blueprint(bill_routes)
+app.mount(
+    "/uploads",  # <-- must start with '/'
+    StaticFiles(directory=r"D:\repository\monthlyinvestment\backend\uploads"),
+    name="uploads"
+)
 
-
-if __name__ == "__main__":
-    app.run(debug=True)
+# Register routes
+app.include_router(auth_router)
+app.include_router(user_router)
+app.include_router(investment_view)
+app.include_router(stock_view)
+app.include_router(bill_view)
+app.include_router(loan_view)
+app.include_router(url_view)
+app.include_router(file_router)

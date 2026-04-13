@@ -1,14 +1,18 @@
-import jwt
+import jwt, os
 from datetime import datetime, timedelta
-from config import JWT_SECRET, JWT_ALGORITHM
 
-def generate_token(payload, expires_in=3600):
-    payload["exp"] = datetime.utcnow() + timedelta(seconds=expires_in)
-    return jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
+SECRET_KEY = os.getenv("N3DF4-XHT6C-WKGQ2-PT4CJ-4VVYP", "supersecret")
+ALGORITHM = "HS256"
 
-def decode_token(token):
+def create_token(data: dict, expires_minutes: int = 60):
+    to_encode = data.copy()
+    expire = datetime.utcnow() + timedelta(minutes=expires_minutes)
+    to_encode.update({"exp": expire})
+    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+
+def decode_token(token: str):
     try:
-        return jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
     except jwt.ExpiredSignatureError:
         return None
     except jwt.InvalidTokenError:

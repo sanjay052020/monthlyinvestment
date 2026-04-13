@@ -171,6 +171,7 @@ export const BillingForm: React.FC = () => {
                 <input
                     type="text"
                     value={billingPerson}
+                    className="billinginputfield"
                     onChange={(e) =>
                         handleFieldChange("billingPerson", e.target.value, () =>
                             setBillingPerson(e.target.value)

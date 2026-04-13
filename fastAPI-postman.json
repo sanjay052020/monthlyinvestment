@@ -558,6 +558,93 @@
       }
     }
 		]
+	},
+	{
+		"name": "File Upload CRUD API",
+		"item": [
+    {
+      "name": "Create Upload",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            { "key": "name", "value": "Sanjay Sah", "type": "text" },
+            { "key": "comments", "value": "Personal notes", "type": "text" },
+            { "key": "session_start", "value": "2026-04-09T09:00:00", "type": "text" },
+            { "key": "session_end", "value": "2026-04-09T10:00:00", "type": "text" },
+            { "key": "file", "type": "file" }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8000/api/upload",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["api", "upload"]
+        }
+      }
+    },
+    {
+      "name": "Read Upload",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/upload/test.pdf",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["api", "upload", "test.pdf"]
+        }
+      }
+    },
+    {
+      "name": "Update Upload",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/uploads/998435227.jpeg",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["api", "uploads", "998435227.jpeg"]
+        },
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "name",
+              "value": "Updated Name",
+              "type": "text"
+            },
+            {
+              "key": "comments",
+              "value": "Updated comments",
+              "type": "text"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Upload",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/upload/test.pdf",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["api", "upload", "test.pdf"]
+        }
+      }
+    }
+  ]
 	}
 		  ]
 }

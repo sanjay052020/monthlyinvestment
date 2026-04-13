@@ -8,31 +8,32 @@ import {
 } from "../../features/usercontact/userContactSlice";
 import UserContactTable from "./UserContactTable";
 import Popup from "../common/Popup";
+import { UserContact } from "./userContact";
+import SearcComponent from "../SearchComponent";
 
 const UserContactList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { contacts, loading, error } = useSelector(
     (state: RootState) => state.userContact
   );
-
+const [query, setQuery] = useState("");
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
-
+  console.log(contacts)
   useEffect(() => {
     dispatch(fetchUserContacts());
   }, [dispatch]);
 
   // Save edited contact
-  const handleEditSave = (contact: any) => {
-    const { _id, user_id, ...contactData } = contact;
-    if (_id) {
-      dispatch(updateUserContact({ userId: _id, contactData }))
+  const handleEditSave = (contact: UserContact) => {
+    const { userid, ...contactData } = contact;
+    if (userid) {
+      dispatch(updateUserContact({ userId: userid, contactData }))
         .unwrap()
         .then(() => {
           setPopupMessage("Contact updated successfully");
           setShowPopup(true);
-          // Refresh list after update
-          dispatch(fetchUserContacts());
+          dispatch(fetchUserContacts()); // refresh list
         })
         .catch((err) => {
           setPopupMessage("Failed to update contact: " + err);
@@ -42,14 +43,13 @@ const UserContactList: React.FC = () => {
   };
 
   // Delete contact
-  const handleDelete = (contactId: string) => {
-    dispatch(deleteUserContact(contactId))
+  const handleDelete = (userid: string) => {
+    dispatch(deleteUserContact(userid))
       .unwrap()
       .then(() => {
         setPopupMessage("Contact deleted successfully");
         setShowPopup(true);
-        // Refresh list after delete
-        dispatch(fetchUserContacts());
+        dispatch(fetchUserContacts()); // refresh list
       })
       .catch((err) => {
         setPopupMessage("Failed to delete contact: " + err);
@@ -61,11 +61,14 @@ const UserContactList: React.FC = () => {
   if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
 
   return (
-    <div>
+    <div className="table-container">
+      <h2 className="table-title">User Contact List</h2>
+      <SearcComponent query={query} setQuery={setQuery} placeHolder="Search by Name, Mobile"/>
       <UserContactTable
         contacts={contacts}
         onEditSave={handleEditSave}
         onDelete={handleDelete}
+        query={query}
       />
       {showPopup && (
         <Popup message={popupMessage} onClose={() => setShowPopup(false)} />

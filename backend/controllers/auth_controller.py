@@ -1,79 +1,49 @@
-from flask import Blueprint, request, jsonify
-from models.user_model import find_user_by_email
-from services.auth_service import forgot_password, register_user, login_user, reset_password
-from utils.jwt_utils import decode_token
+from models.auth_model import UserRegister
+from utils.jwt_utils import create_token, decode_token
+from passlib.context import CryptContext
+from config import users
+from fastapi import HTTPException, Request
 
-auth_bp = Blueprint("auth", __name__)
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-@auth_bp.route("/register", methods=["POST"])
-def register():
-    data = request.json
-    result = register_user(data["email"], data["password"], data.get("role", "user"))
-    return jsonify(result)
+def register_user(user: UserRegister):
+    if users.find_one({"email": user.email}):
+        return {"error": "Email already exists"}
+    if users.find_one({"username": user.username}):
+        return {"error": "Username already exists"}
 
-@auth_bp.route("/login", methods=["POST"])
-def login():
-    data = request.json
-    result = login_user(data["email"], data["password"])
-    return jsonify(result)
+    hashed_pw = pwd_context.hash(user.password)
+    users.insert_one({
+        "username": user.username,
+        "email": user.email,
+        "password": hashed_pw,
+        "role": user.role
+    })
+    return {"message": "User registered successfully"}
 
-@auth_bp.route("/protected", methods=["GET"])
-def protected():
+def login_user(email: str, password: str):
+    user = users.find_one({"email": email})
+    if not user or not pwd_context.verify(password, user["password"]):
+        return {"error": "Invalid credentials"}
+    token = create_token({"email": email, "role": user["role"], "username": user["username"]})
+    return {"token": token}
+
+def get_user_details(request: Request):
     token = request.headers.get("Authorization")
     if not token:
-        return jsonify({"error": "Token missing"}), 401
-    
-    decoded = decode_token(token)
+        raise HTTPException(status_code=401, detail="Token missing")
+
+    decoded = decode_token(token.split(" ")[-1])
     if not decoded:
-        return jsonify({"error": "Invalid or expired token"}), 401
-    
-    # RBAC check
-    if decoded["role"] != "admin":
-        return jsonify({"error": "Access denied"}), 403
-    
-    return jsonify({"message": "Welcome Admin!"})
+        raise HTTPException(status_code=401, detail="Invalid or expired token")
 
-@auth_bp.route("/forgot-password", methods=["POST"])
-def forgot():
-    data = request.json
-    result = forgot_password(data["email"])
-    return jsonify(result)
-
-@auth_bp.route("/reset-password", methods=["POST"])
-def reset():
-    data = request.json
-    result = reset_password(data["token"], data["newPassword"])
-    return jsonify(result)
-
-@auth_bp.route("/user-details", methods=["POST"])
-def user_details():
-    auth_header = request.headers.get("Authorization")
-    if not auth_header:
-        return jsonify({"error": "Token missing"}), 401
-
-    # Handle "Bearer <token>" format
-    token = auth_header.split(" ")[-1]
-
-    decoded = decode_token(token)
-    if not decoded:
-        return jsonify({"error": "Invalid or expired token"}), 401
-
-    data = request.json or {}
-    requested_email = data.get("email")
-
-    # Default: current user's email
-    if not requested_email:
-        requested_email = decoded["email"]
-
-    # RBAC: only admins can query other users
-    if requested_email != decoded["email"] and decoded.get("role") != "admin":
-        return jsonify({"error": "Access denied"}), 403
-
-    user = find_user_by_email(requested_email)
+    user = users.find_one({"email": decoded["email"]})
     if not user:
-        return jsonify({"error": "User not found"}), 404
+        raise HTTPException(status_code=404, detail="User not found")
 
-    return jsonify({
-        "email": user.get("email"),
-        "role": user.get("role")
-    })
+    return {
+        "username": user["username"],
+        "email": user["email"],
+        "role": user["role"]
+    }
+

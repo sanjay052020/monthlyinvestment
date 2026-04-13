@@ -73,12 +73,19 @@
   color: #d83b01; /* red for delete */
 }
 
-input[type="text"],
 input[type="date"],
 input[type="number"] {
   padding: 11px 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 90%;
+  width: 106%;
+  font-size: 14px;
+}
+
+input[type="text"] {
+  padding: 11px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 102%;
   font-size: 14px;
 }

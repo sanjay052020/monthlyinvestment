@@ -5,19 +5,9 @@ import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import "./UserContactForm.css";
 import { AppDispatch, RootState } from "../../store";
-import { createUserContact, fetchUserContactByMobile } from "../../features/usercontact/userContactSlice";
+import { createUserContact } from "../../features/usercontact/userContactSlice";
 import Popup from "../Popup";
-
-// Define the shape of the form data
-interface UserContact {
-    name: string;
-    mobile: string;
-    address: string;
-    state: string;
-    city: string;
-    pin: string;
-    _id?: string
-}
+import { UserContact } from "./userContact";
 
 // Validation schema
 const schema = yup.object({
@@ -26,102 +16,92 @@ const schema = yup.object({
         .string()
         .matches(/^[0-9]{10}$/, "Mobile must be a 10-digit number")
         .required("Mobile is required"),
-    address: yup.string().required("Address is required"),
-    state: yup.string().required("State is required"),
-    city: yup.string().required("City is required"),
-    pin: yup
-        .string()
-        .matches(/^[0-9]{6}$/, "PIN must be a 6-digit number")
-        .required("PIN is required"),
+    address: yup.object({
+        city: yup.string().required("City is required"),
+        state: yup.string().required("State is required"),
+        pin: yup
+            .string()
+            .matches(/^[0-9]{6}$/, "PIN must be a 6-digit number")
+            .required("PIN is required"),
+    }),
 });
+
+
 
 const UserContactForm: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const { loading, error, lastMessage } = useSelector(
+    const { loading, error } = useSelector(
         (state: RootState) => state.userContact
     );
-    const [msg, setMsg] = useState('');
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        reset,
-    } = useForm<UserContact>({
+    const [msg, setMsg] = useState("");
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<UserContact>({
         resolver: yupResolver(schema),
     });
     const [showPopup, setShowPopup] = useState(false);
+
     const onSubmit = async (data: UserContact) => {
         try {
-            debugger
-            // First check if mobile exists
-            const existingUser = await dispatch(fetchUserContactByMobile(data.mobile)).unwrap();
-
-            if (existingUser) {
-                // Show error inline and stop submission
-                setShowPopup(true);
-                setMsg("This mobile number is already registered.")
-                return;
+            const result = await dispatch(createUserContact(data)).unwrap();
+            if (result && result?.lastMessage) {
+                setMsg(result?.message);
+            } else {
+                setMsg("Contact created successfully");
             }
 
-            // If not duplicate, proceed to create
-            await dispatch(createUserContact(data)).unwrap();
             setShowPopup(true);
             reset();
-        } catch (error: any) {
-            console.error("Unexpected error:", error.message);
+        } catch (err: any) {
+            if (err?.message) {
+                setMsg("Duplicate Mobile Number..");
+                setShowPopup(true);
+            }
         }
     };
-
-
 
     return (
         <form className="form-container" onSubmit={handleSubmit(onSubmit)}>
             <div className="title">User Contact Form</div>
 
             <div className="form-group">
-                <label>Name</label>
-                <input {...register("name")} />
+                <label className="userlable">Name</label>
+                <input {...register("name")} className="userinput" />
                 <span className="error">{errors.name?.message}</span>
             </div>
 
             <div className="form-group">
-                <label>Mobile</label>
-                <input {...register("mobile")} maxLength={10} />
+                <label className="userlable">Mobile</label>
+                <input {...register("mobile")} maxLength={10} className="userinput"/>
                 <span className="error">{errors.mobile?.message}</span>
             </div>
 
             <div className="form-group">
-                <label>Address</label>
-                <input {...register("address")} />
-                <span className="error">{errors.address?.message}</span>
+                <label className="userlable">City</label>
+                <input {...register("address.city")} className="userinput"/>
+                <span className="error">{errors.address?.city?.message}</span>
             </div>
 
             <div className="form-group">
-                <label>State</label>
-                <input {...register("state")} />
-                <span className="error">{errors.state?.message}</span>
+                <label className="userlable">State</label>
+                <input {...register("address.state")} className="userinput"/>
+                <span className="error">{errors.address?.state?.message}</span>
             </div>
 
             <div className="form-group">
-                <label>City</label>
-                <input {...register("city")} />
-                <span className="error">{errors.city?.message}</span>
-            </div>
-
-            <div className="form-group">
-                <label>PIN</label>
-                <input {...register("pin")} />
-                <span className="error">{errors.pin?.message}</span>
+                <label className="userlable">PIN</label>
+                <input {...register("address.pin")} maxLength={6} className="userinput"/>
+                <span className="error">{errors.address?.pin?.message}</span>
             </div>
 
             <button type="submit" className="submit-btn" disabled={loading}>
                 {loading ? "Submitting..." : "Submit"}
             </button>
 
-            {showPopup && lastMessage && <Popup
-                message={lastMessage ?? msg}
-                onClose={() => setShowPopup(false)}
-            />}
+            {showPopup && (
+                <Popup
+                    message={msg || "Duplicate Mobile Number."}
+                    onClose={() => setShowPopup(false)}
+                />
+            )}
             {error && <p className="error">{error}</p>}
         </form>
     );

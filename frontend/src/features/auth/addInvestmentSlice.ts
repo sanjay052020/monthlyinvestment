@@ -3,9 +3,9 @@ import api from "../../api";
 import Cookies from "js-cookie";
 
 export interface Investment {
-    _id?: string;
+    investment_id?: string;
     amount: number;
-    toInvestment: string;
+    toinvestment: string;
     date: string;
     reason: string;
     status: string;
@@ -39,16 +39,15 @@ export const addInvestment = createAsyncThunk<
     async (investmentData, { rejectWithValue }) => {
         try {
             const token = Cookies.get("authToken");
-            const response = await api.post("/investment/add", investmentData, {
+            const response = await api.post("/investments", investmentData, {
                 headers: {
                     Authorization: token ? `Bearer ${token}` : "",
                 },
             });
-
             // ✅ assume backend returns { investment: {...}, message: "Investment added successfully" }
             return {
-                investment: response.data.investment,
-                message: response.data.message,
+                investment: response.data,
+                message: "Investment added successfully",
             };
         } catch (err: any) {
             return rejectWithValue(err.response?.data?.message || "Failed to add investment");
@@ -65,12 +64,11 @@ export const updateInvestment = createAsyncThunk<
     "investment/updateInvestment",
     async (investmentData, { rejectWithValue }) => {
         try {
-            const token = Cookies.get("authToken");
-            debugger
+            const token = Cookies.get("token");
             // ✅ remove _id from body
-            const { _id, ...payload } = investmentData;
+            const { investment_id, ...payload } = investmentData;
 
-            const response = await api.put(`/investment/${_id}`, payload, {
+            const response = await api.put(`/investments/${investment_id}`, payload, {
                 headers: {
                     Authorization: token ? `Bearer ${token}` : "",
                 },
@@ -99,7 +97,7 @@ export const fetchAllInvestments = createAsyncThunk<
     async (_, { rejectWithValue }) => {
         try {
             const token = Cookies.get("authToken");
-            const response = await api.get("/investment/all", {
+            const response = await api.get("/investments", {
                 headers: {
                     Authorization: token ? `Bearer ${token}` : "",
                 },
@@ -114,23 +112,18 @@ export const fetchAllInvestments = createAsyncThunk<
 
 // ✅ Delete Investment
 export const deleteInvestment = createAsyncThunk<
-    string, // return deleted id
-    string, // argument: id
-    { rejectValue: string }
->("investment/deleteInvestment", async (id, { rejectWithValue }) => {
-    try {
-        const token = Cookies.get("authToken");
-        await api.delete(`/investment/${id}`, {
-            headers: {
-                Authorization: token ? `Bearer ${token}` : "",
-            },
-        });
-        return id; // return deleted id so we can remove from state
-    } catch (err: any) {
-        return rejectWithValue(
-            err.response?.data?.message || "Failed to delete investment"
-        );
-    }
+  string, // return deleted investment_id
+  string, // argument: investment_id
+  { rejectValue: string }
+>("investment/deleteInvestment", async (investment_id, { rejectWithValue }) => {
+  try {
+    await api.delete(`/investments/${investment_id}`);
+    return investment_id; // return deleted id so we can remove from state
+  } catch (err: any) {
+    return rejectWithValue(
+      err.response?.data?.message || "Failed to delete investment"
+    );
+  }
 });
 
 
@@ -184,7 +177,7 @@ const addInvestmentSlice = createSlice({
             })
             .addCase(deleteInvestment.fulfilled, (state, action) => {
                 state.loading = false;
-                state.list = state.list.filter((inv) => inv._id !== action.payload);
+                state.list = state.list.filter((inv) => inv.investment_id !== action.payload);
                 state.message = "Investment deleted successfully";
             })
             .addCase(deleteInvestment.rejected, (state, action) => {
@@ -202,9 +195,9 @@ const addInvestmentSlice = createSlice({
 
                 // ✅ Defensive check: ensure we have an _id
                 const updated = action.payload.investment;
-                if (updated && updated._id) {
+                if (updated && updated.investment_id) {
                     state.list = state.list.map((inv) =>
-                        inv._id === updated._id ? updated : inv
+                        inv.investment_id === updated.investment_id ? updated : inv
                     );
                 }
             })

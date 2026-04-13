@@ -54,11 +54,11 @@ const InvestmentTableBody: React.FC<InvestmentTableBodyProps> = ({
       <tbody>
         {currentData.length > 0 ? (
           currentData.map((inv, index) => (
-            <tr key={inv._id ?? index}>
+            <tr key={inv.investment_id ?? index}>
               <td>{startIndex + index + 1}</td>
               <td>{formatDate(inv.date)}</td>
               <td>₹ {formatIndianAmount(inv.amount)}</td>
-              <td>{inv.toInvestment}</td>
+              <td>{inv.toinvestment}</td>
               <td>{inv.reason}</td>
               <td>
                 <Pencil
@@ -73,7 +73,7 @@ const InvestmentTableBody: React.FC<InvestmentTableBodyProps> = ({
                   color="#e74c3c"
                   weight="bold"
                   className={styles.deleteIcon}
-                  onClick={() => onDelete(inv._id!)}
+                  onClick={() => onDelete(inv.investment_id!)}
                 />
               </td>
             </tr>

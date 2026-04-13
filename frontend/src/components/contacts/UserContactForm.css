@@ -58,7 +58,7 @@
   font-weight: bold;
   cursor: pointer;
   font-size: 20px;
-  box-shadow: 1px 1px 1px rgba(1,1,1,0.5);
+  box-shadow: 1px 2px 5px rgba(1,1,1,0.5);
 }
 
 .submit-btn:hover {
@@ -77,3 +77,14 @@ input:focus {
   border-color: #ea72e2; /* blue highlight when focused */
 }
 
+.userlable{
+  color: black !important;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.userinput{
+  width: 95%;
+  background: #ccc;
+  color: #005fa3;
+}

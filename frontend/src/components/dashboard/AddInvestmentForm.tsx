@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Select from "react-select";
 import styles from "./AddInvestmentForm.module.css";
 import { RootState } from "../../store";
@@ -10,7 +10,7 @@ import { investmentOptions } from "./investmentOptions";
 
 interface InvestmentFormData {
     amount: number;
-    toInvestment: string;
+    toinvestment: string;
     date: string;
     reason: string;
     status: string;
@@ -19,7 +19,7 @@ interface InvestmentFormData {
 const AddInvestmentForm: React.FC = () => {
     const [formData, setFormData] = useState<InvestmentFormData>({
         amount: 0,
-        toInvestment: "",
+        toinvestment: "",
         date: "",
         reason: "",
         status: 'pending'
@@ -40,38 +40,35 @@ const AddInvestmentForm: React.FC = () => {
     const handleSelectChange = (option: any) => {
         setFormData((prev) => ({
             ...prev,
-            toInvestment: option.value,
+            toinvestment: option.value,
         }));
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        dispatch(addInvestment(formData));
-    };
-
-    useEffect(() => {
-        if (message) {
-            setShowPopup(true)
-            setFormData({
-                amount: 0,
-                date: "",
-                reason: '',
-                toInvestment: "",
-                status: "pending"
+        dispatch(addInvestment(formData))
+            .unwrap()
+            .then((res) => {
+                // res should contain the new investment object with id
+                if (res?.message) {
+                    setShowPopup(true)
+                    setFormData({
+                        amount: 0,
+                        date: "",
+                        reason: '',
+                        toinvestment: "",
+                        status: "pending"
+                    })
+                }
             })
-        }
-        // Auto-close after 3 seconds
-        const timer = setTimeout(() => {
-            setShowPopup(false);
-        }, 1000);
-
-        // Cleanup to avoid memory leaks
-        return () => clearTimeout(timer);
-    }, [message])
+            .catch((err) => {
+                console.error("Failed to add investment:", err);
+            });
+    };
 
     const isFormValid =
         formData.amount > 0 &&
-        formData.toInvestment.trim() !== "" &&
+        formData.toinvestment.trim() !== "" &&
         formData.date.trim() !== "" &&
         formData.reason.trim() !== "";
 
@@ -97,7 +94,7 @@ const AddInvestmentForm: React.FC = () => {
                 <label className={styles.formLabel}>To Investment:</label>
                 <Select
                     options={investmentOptions}
-                    value={investmentOptions.find((opt) => opt.value === formData.toInvestment)}
+                    value={investmentOptions.find((opt) => opt.value === formData.toinvestment)}
                     onChange={handleSelectChange}
                     classNamePrefix="react-select"
                     placeholder="Select..."
@@ -110,6 +107,7 @@ const AddInvestmentForm: React.FC = () => {
                             borderColor: "#ccc",
                             backgroundColor: "#f9f9f9",
                             boxShadow: "none",
+                            color: "#0668e7 !important",
                             "&:hover": { borderColor: "#0668e7" },
                         }),
                         singleValue: (base) => ({
@@ -120,7 +118,7 @@ const AddInvestmentForm: React.FC = () => {
                         placeholder: (base) => ({
                             ...base,
                             textAlign: "left",      // placeholder left aligned
-                            color: "#888",          // softer placeholder color
+                            color: "#0668e7",          // softer placeholder color
                         }),
                         option: (base) => ({
                             ...base,
@@ -167,7 +165,7 @@ const AddInvestmentForm: React.FC = () => {
         {loading && <CircleLoader />}
         {showPopup && (
             <Popup
-                message={message || ""}
+                message={message ?? "Investment Added Successfully"}
                 onClose={() => setShowPopup(false)}
             />
         )}

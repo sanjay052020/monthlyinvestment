@@ -1,20 +1,20 @@
 .container {
     margin: 20px auto;
-    width: 98%;
+    width: 100%;
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(1, 1, 1, 0.25);
     font-family: 'Inter', sans-serif;
     padding: 10px 15px 10px 15px;
     border: 2px solid #1e0ff2;
-    background-color: #fafafa;
+    background-color: #cef1a5;
 
 }
 
 .searchBar {
     display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 5px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
 }
 
 .searchGroup {
@@ -25,27 +25,30 @@
 .searchLabel {
     display: flex;
     flex-direction: column;
-    font-size: 15px;
+    font-size: 17px;
     font-weight: bold;
-    color: #2e0bc9;
+    color: #2e0bc9 !important;
     font-family: Arial, Helvetica, sans-serif;
     align-items: flex-start;
 }
 
 .totalAmount {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #0668e7;
-  margin-left: auto;
-  text-align: right;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0668e7;
+    margin-left: auto;
+    text-align: right;
 }
 
 
 .searchInput {
     padding: 8px;
+    width: 94% !important;
     border-radius: 6px;
     margin-top: 5px;
-    border: 1px solid blue;
+    border: 1px solid blue !important;
+    background: white !important;
+    color: #0b0ee3 !important;
 
 }
 
@@ -71,11 +74,13 @@
 }
 
 .table tr:nth-child(even) {
-    background: #e6e9ed; /* light gray for even rows */
+    background: #e6e9ed;
+    /* light gray for even rows */
 }
 
 .table tr:nth-child(odd) {
-    background: #f9f9f9; /* keep your original background for odd rows */
+    background: #f9f9f9;
+    /* keep your original background for odd rows */
 }
 
 
@@ -133,36 +138,54 @@
 }
 
 .inputGroupWrapper {
-  border: 2px solid #0668e7;
-  border-radius: 12px;
-  padding: 12px 16px;
-  display: flex;
-  gap: 16px;
-  align-items: center;
+    border: 2px solid #0668e7;
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
 }
 
 .groupLegend {
-  font-size: .8rem;
-  font-weight: 500;
-  color: #7a7d81;
-  padding: 0 8px;
+    font-size: .8rem;
+    font-weight: 500;
+    color: #7a7d81;
+    padding: 0 8px;
 }
 
-.todoclass{
+.todoclass {
     color: #b709e7;
     font-weight: bold;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 20px;
+    font-size: 15px;
 }
-.currentclass{
+
+.currentclass {
     color: #bf09d0;
     font-weight: bold;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 20px;
+    font-size: 15px;
+    animation: blinkText 2s infinite;
 }
-.totalClass{
+
+@keyframes blinkText {
+    0% {
+        opacity: 1;
+        background-color: #f0f0f0; /* light gray */
+    }
+    50% {
+        opacity: 0;
+        background-color: #ffe066; /* yellow */
+    }
+    100% {
+        opacity: 1;
+        background-color: #66ebb1; /* back to light gray */
+    }
+}
+
+.totalClass {
     color: #0b0ee3;
     font-weight: bold;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 20px;
+    font-size: 15px;
 }

@@ -15,7 +15,10 @@ export const investmentOptions = [
     { value: "Electricity Expanses", label: "Electricity Expanses" },
     { value: "Axis Credit Card Bill", label: "Axis Credit Card Bill" },
     { value: "SBI Credit Card Bill", label: "SBI Credit Card Bill" },
-    { value: "Axis Credit Card Expanses", label: "Axis Credit Card Expanses" },
     { value: "SBI Credit Card Expanses", label: "SBI Credit Card Expanses" },
     { value: "FD Expanses", label: "FD Expanses" },
+    { value: "Personal Expanses", label: "Personal Expanses" },
+    { value: "Bank Deposit", label: "Bank Deposit" },
+    { value: "Bike Expanses", label: "Bike Expanses" },
+    { value: "Property Tax", label: "Property Tax" },
 ];

@@ -9,6 +9,7 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   font-family: "Segoe UI", Arial, sans-serif;
   text-align: center;
+  background: #c6eab0;
 }
 
 /* Title */
@@ -142,4 +143,10 @@
     color: #2980b9;
     font-size: 20px;
     font-weight: bold;
+}
+
+.labelfield{
+  color: #060883 !important;
+  font-size: 17px !important;
+  font-family: 'Times New Roman', Times, serif;
 }

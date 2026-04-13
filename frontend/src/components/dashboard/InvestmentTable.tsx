@@ -51,7 +51,7 @@ const InvestmentTable: React.FC<InvestmentTableProps> = ({ statusFilter = "compl
 
 
 
-    // Filter data by month/year and toInvestment search
+    // Filter data by month/year and toinvestment search
     const filteredData =
         list?.filter((item) => {
             const itemDate = new Date(item.date);
@@ -61,9 +61,9 @@ const InvestmentTable: React.FC<InvestmentTableProps> = ({ statusFilter = "compl
             const matchesMonthYear =
                 (month ? itemMonth === month : true) &&
                 (year ? itemYear === year : true);
-
+                
             const matchesSearch =
-                searchTerm ? item.toInvestment.toLowerCase().includes(searchTerm.toLowerCase()) : true;
+                searchTerm ? item.toinvestment.toLowerCase().includes(searchTerm.toLowerCase()) : true;
 
             return matchesMonthYear && matchesSearch;
         }) || [];

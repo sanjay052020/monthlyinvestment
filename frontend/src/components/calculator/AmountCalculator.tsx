@@ -81,7 +81,7 @@ const AmountCalculator: React.FC = () => {
                         {entries.map((entry, index) => (
                             <tr key={index}>
                                 <td>{entry.text}</td>
-                                <td>₹{formatIndianAmount(entry.amount)}</td>
+                                <td>{formatIndianAmount(entry.amount)}</td>
                                 <td>
                                     <button
                                         className="amtdelete-btn"

@@ -1,13 +1,37 @@
-MONGO_URI = "mongodb://localhost:27017/mvc_auth"
-JWT_SECRET = "N3DF4-XHT6C-WKGQ2-PT4CJ-4VVYP"
-JWT_ALGORITHM = "HS256"
-
-from pymongo import MongoClient
 import os
+from pymongo import MongoClient
+from dotenv import load_dotenv
+from motor.motor_asyncio import AsyncIOMotorClient
 
+# Load environment variables from .env file
+load_dotenv()
+
+# MongoDB connection string from environment
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
+DB_NAME = "finance_db"
+FILE_UPLOADS_DB = "file_uploads"
+
+# Initialize MongoDB client
 client = MongoClient(MONGO_URI)
-db = client["monthly-investment"]
+db = client["monthly_investment"]
+
+clientfinance = AsyncIOMotorClient(MONGO_URI)
+dbfinance = clientfinance[DB_NAME]
+urlDBName = clientfinance["URL_DB"]
+file_uploads_db = clientfinance[FILE_UPLOADS_DB]
+# Collections
+users = db["users"]
+dbusers = db["user_management"]
+investments = db["investments"]
+stocks = db["stockmanagement"]
+bills = db["customerbills"]
+url_collection = urlDBName["urls"]
+
+async def get_file_uploads_db():
+    return file_uploads_db
+
+
+
 
 
 

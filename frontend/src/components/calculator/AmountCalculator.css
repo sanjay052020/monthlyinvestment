@@ -1,6 +1,6 @@
 .shadow-box {
   position: relative;
-  background-color: #f1e2ee;
+  background-color: #edef9b;
   padding: 20px;
   margin: 40px auto;
   max-width: 700px;
@@ -43,6 +43,7 @@
   border: 1px solid #97f0b8;
   border-radius: 6px;
   box-shadow: 10px 10px 20px rgba(1,1,1,0.15);
+  background: #bdc2c1 !important;
 }
 
 

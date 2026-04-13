@@ -12,14 +12,7 @@ const Navbar: React.FC<{ avatarUrl: string }> = ({ avatarUrl }) => {
   const { user, loading, error } = useAppSelector((state) => state.navbar);
 
   useEffect(() => {
-    // ✅ Get email from localStorage
-    const storedEmail = localStorage.getItem("userEmail");
-    if (storedEmail) {
-      dispatch(fetchUserDetails(storedEmail));
-    } else {
-      // fallback: fetch current user from token
-      dispatch(fetchUserDetails());
-    }
+    dispatch(fetchUserDetails());
   }, [dispatch]);
 
   const handleLogout = () => {

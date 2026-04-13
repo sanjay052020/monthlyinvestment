@@ -30,7 +30,7 @@ const ProductRow: React.FC<ProductRowProps> = ({
         <div className="product-row">
             {/* Product Name */}
             <div className="product-field">
-                <label>Product Name</label>
+                <label className="inputLabel">Product Name</label>
                 <Select
                     options={productOptions}
                     value={
@@ -58,12 +58,13 @@ const ProductRow: React.FC<ProductRowProps> = ({
 
             {/* Product ID */}
             <div className="product-field">
-                <label>Product ID</label>
+                <label className="inputLabel">Product ID</label>
                 <input
                     type="text"
                     value={product.productId}
                     readOnly
                     placeholder="Please select product name"
+                    className="productinputfieldid"
                 />
                 {errors[`product-id-${index}`] && (
                     <span className="error">{errors[`product-id-${index}`]}</span>
@@ -72,11 +73,12 @@ const ProductRow: React.FC<ProductRowProps> = ({
 
             {/* Qty */}
             <div className="product-field">
-                <label>Qty</label>
+                <label className="inputLabel">Qty</label>
                 <input
                     type="number"
                     value={product.qty}
                     onChange={(e) => updateProduct(index, "qty", parseFloat(e.target.value))}
+                    className="productinputfield"
                 />
                 {errors[`product-qty-${index}`] && (
                     <span className="error">{errors[`product-qty-${index}`]}</span>
@@ -85,11 +87,12 @@ const ProductRow: React.FC<ProductRowProps> = ({
 
             {/* Rate */}
             <div className="product-field">
-                <label>Rate</label>
+                <label className="inputLabel">Rate</label>
                 <input
                     type="number"
                     value={product.rate}
                     onChange={(e) => updateProduct(index, "rate", parseFloat(e.target.value))}
+                    className="productinputfield"
                 />
                 {errors[`product-rate-${index}`] && (
                     <span className="error">{errors[`product-rate-${index}`]}</span>
@@ -98,12 +101,13 @@ const ProductRow: React.FC<ProductRowProps> = ({
 
             {/* Weight */}
             <div className="product-field">
-                <label>Weight</label>
+                <label className="inputLabel">Weight</label>
                 <input
                     type="text"
                     value={product.weight}
                     onChange={(e) => updateProduct(index, "weight", e.target.value)}
                     placeholder="Enter weight"
+                    className="productinputfield"
                 />
                 {errors[`product-weight-${index}`] && (
                     <span className="error">{errors[`product-weight-${index}`]}</span>

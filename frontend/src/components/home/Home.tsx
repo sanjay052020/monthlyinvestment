@@ -40,12 +40,12 @@ const Home: React.FC = () => {
     items.forEach((item) => {
       const dateKey = new Date(item.date).toLocaleDateString("en-GB");
       if (!grouped[dateKey]) grouped[dateKey] = {};
-      if (!grouped[dateKey][item.toInvestment]) grouped[dateKey][item.toInvestment] = 0;
-      grouped[dateKey][item.toInvestment] += item.amount ?? 0;
+      if (!grouped[dateKey][item.toinvestment]) grouped[dateKey][item.toinvestment] = 0;
+      grouped[dateKey][item.toinvestment] += item.amount ?? 0;
     });
 
     const labels = Object.keys(grouped);
-    const categories = Array.from(new Set(items.map((i) => i.toInvestment)));
+    const categories = Array.from(new Set(items.map((i) => i.toinvestment)));
 
     const datasets = categories.map((cat, idx) => ({
       label: cat,

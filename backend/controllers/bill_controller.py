@@ -1,94 +1,91 @@
-# bill_controller.py
-from models.bill_model import Bill,bills_collection
+import uuid
+from config import bills, stocks
+from models.bill_model import BillCreate
 
-class BillController:
-    def __init__(self):
-        pass  # no need for self.bills, we use MongoDB
+def generate_bill(data: BillCreate):
+    bill_id = str(uuid.uuid4())
+    total_amount = 0
+    items_out = []
 
-    def create_bill(self, billing_person, mode_of_payment, date=None):
-        bill = Bill(billing_person, mode_of_payment, date)
-        bill.save_to_db()  # persist in MongoDB
-        return bill.to_dict()
+    for item in data.items:
+        stock = stocks.find_one({"stock_id": item.stock_id})
+        if not stock:
+            raise ValueError(f"Stock {item.stock_id} not found")
+        if stock["quantity"] < item.quantity:
+            raise ValueError(f"Insufficient stock for {stock['name']}")
 
-    def read_bill(self, billing_id):
-        return Bill.get_bill_by_id(billing_id)
+        # Update stock quantity
+        stocks.update_one({"stock_id": item.stock_id}, {"$inc": {"quantity": -item.quantity}})
 
-    def update_bill(self, billing_id, new_payment_mode=None, new_date=None):
-        update_fields = {}
-        if new_payment_mode:
-            update_fields["mode_of_payment"] = new_payment_mode
-        if new_date:
-            update_fields["date"] = new_date
-        if update_fields:
-            Bill.update_bill_in_db(billing_id, update_fields)
-        return Bill.get_bill_by_id(billing_id)
+        # Calculate line amount using provided price
+        line_amount = item.price * item.quantity
+        total_amount += line_amount
 
-    def delete_bill(self, billing_id):
-        Bill.delete_bill(billing_id)
-        return {"status": "deleted", "billing_id": billing_id}
+        items_out.append({"stock_id": item.stock_id, "quantity": item.quantity, "price": item.price})
 
-    def add_product_to_bill(self, billing_id, product_name, productid, qty, rate, weight=None):
-        bill_data = Bill.get_bill_by_id(billing_id)
-        if bill_data:
-            bill = Bill(
-                bill_data["billing_person"],
-                bill_data["mode_of_payment"],
-                bill_data["date"]
-            )
-            bill.billing_id = bill_data["billing_id"]
-            bill.products = bill_data["products"]
+    record = {
+        "bill_id": bill_id,
+        "customer_name": data.customer_name,
+        "customer_mobile": data.customer_mobile,
+        "date": str(data.date),
+        "items": items_out,
+        "total_amount": total_amount
+    }
+    bills.insert_one(record)
+    return record
 
-            bill.add_product(product_name, productid, qty, rate, weight)
-            Bill.update_bill_in_db(billing_id, {"products": bill.products, "total": bill.calculate_total()})
-            return Bill.get_bill_by_id(billing_id)
-        return None
+def list_bills():
+    return list(bills.find({}, {"_id": 0}))
 
-    def remove_product_from_bill(self, billing_id, product_name):
-        bill_data = Bill.get_bill_by_id(billing_id)
-        if bill_data:
-            bill = Bill(
-                bill_data["billing_person"],
-                bill_data["mode_of_payment"],
-                bill_data["date"]
-            )
-            bill.id = bill_data["id"]
-            bill.billing_id = bill_data["billing_id"]
-            bill.products = bill_data["products"]
+def fetch_bill_by_id(bill_id: str):
+    return bills.find_one({"bill_id": bill_id}, {"_id": 0})
 
-            bill.remove_product(product_name)
-            Bill.update_bill_in_db(billing_id, {"products": bill.products, "total": bill.calculate_total()})
-            return Bill.get_bill_by_id(billing_id)
-        return None
+def update_bill(bill_id: str, updates: dict):
+    existing_bill = bills.find_one({"bill_id": bill_id})
+    if not existing_bill:
+        return {"error": "Bill not found"}
 
-    def update_product_in_bill(self, billing_id, product_name, productid=None, qty=None, new_rate=None, weight=None):
-        bill_data = Bill.get_bill_by_id(billing_id)
-        if bill_data:
-            bill = Bill(
-                bill_data["billing_person"],
-                bill_data["mode_of_payment"],
-                bill_data["date"]
-            )
-            bill.id = bill_data["id"]
-            bill.billing_id = bill_data["billing_id"]
-            bill.products = bill_data["products"]
+    # If items are updated, adjust stock accordingly
+    if "items" in updates:
+        # First, restore stock from old bill items
+        for old_item in existing_bill["items"]:
+            stocks.update_one({"stock_id": old_item["stock_id"]}, {"$inc": {"quantity": old_item["quantity"]}})
 
-            bill.update_product(product_name, productid, qty, new_rate, weight)
-            Bill.update_bill_in_db(billing_id, {"products": bill.products, "total": bill.calculate_total()})
-            return Bill.get_bill_by_id(billing_id)
-        return None
-    
-    def delete_product_from_bill(self, billing_id, product_id):
-        bill = bills_collection.find_one({"billing_id": billing_id})
-        if not bill:
-            return None
+        # Then, apply new items and reduce stock
+        total_amount = 0
+        new_items = []
+        for item in updates["items"]:
+            stock = stocks.find_one({"stock_id": item["stock_id"]})
+            if not stock:
+                return {"error": f"Stock {item['stock_id']} not found"}
+            if stock["quantity"] < item["quantity"]:
+                return {"error": f"Insufficient stock for {stock['stock_id']}"}
 
-        # Remove product by productId
-        result = bills_collection.update_one(
-            {"billing_id": billing_id},
-            {"$pull": {"products": {"productId": product_id}}}
+            stocks.update_one({"stock_id": item["stock_id"]}, {"$inc": {"quantity": -item["quantity"]}})
+            line_amount = item["price"] * item["quantity"]
+            total_amount += line_amount
+            new_items.append(item)
+
+        updates["items"] = new_items
+        updates["total_amount"] = total_amount
+
+    result = bills.update_one({"bill_id": bill_id}, {"$set": updates})
+    return {"message": "Bill updated successfully"}
+
+def remove_bill(bill_id: str):
+    existing_bill = bills.find_one({"bill_id": bill_id})
+    if not existing_bill:
+        return {"error": "Bill not found"}
+
+    # Rollback stock quantities from the bill items
+    for item in existing_bill["items"]:
+        stocks.update_one(
+            {"stock_id": item["stock_id"]},
+            {"$inc": {"quantity": item["quantity"]}}
         )
 
-        if result.modified_count == 0:
-            return None
-
-        return self.read_bill(billing_id)
+    # Delete the bill
+    result = bills.delete_one({"bill_id": bill_id})
+    if result.deleted_count == 0:
+        return {"error": "Bill not found"}
+    return {"message": "Bill deleted successfully and stock rolled back"}

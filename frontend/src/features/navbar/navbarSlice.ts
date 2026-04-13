@@ -21,18 +21,14 @@ const initialState: NavbarState = {
 // ✅ Async thunk to fetch user details, optionally by email
 export const fetchUserDetails = createAsyncThunk(
   "navbar/fetchUserDetails",
-  async (email: string | undefined, thunkAPI) => {
+  async (_: void, thunkAPI) => {
     try {
-      const token = localStorage.getItem("authToken");
-      const response = await api.post(
-        "/auth/user-details",
-        email ? { email } : {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const token = localStorage.getItem("token");
+      const response = await api.get("/auth/user-details", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return response.data;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(
@@ -41,6 +37,7 @@ export const fetchUserDetails = createAsyncThunk(
     }
   }
 );
+
 
 
 const navbarSlice = createSlice({

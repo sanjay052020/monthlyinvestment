@@ -15,8 +15,21 @@ const ReportGenerator: React.FC = () => {
     const [reportType, setReportType] = useState("Sales Report");
     const [category, setCategory] = useState("pending");
     const [format, setFormat] = useState("PDF");
-    const [fromDate, setFromDate] = useState("2026-01-01");
-    const [toDate, setToDate] = useState("2026-01-31");
+    const formatDateLocal = (date: Date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+    };
+
+    const today = new Date();
+    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+    const [fromDate, setFromDate] = useState(formatDateLocal(firstDayOfMonth));
+    const [toDate, setToDate] = useState(formatDateLocal(lastDayOfMonth));
+
+
 
     const [status, setStatus] = useState<Status>("form");
 
@@ -27,19 +40,15 @@ const ReportGenerator: React.FC = () => {
         dispatch(fetchAllInvestments());
     }, [dispatch]);
 
-    if(loading){
+    if (loading) {
         return <CircleLoader />
-    }
-
-    if(error){
-        return <div color="red">Error...</div>
     }
 
     // Utility function to filter by date range
     const filterByDateRange = (data: any[], from: string, to: string) => {
         const fromTime = new Date(from).getTime();
         const toTime = new Date(to).getTime();
-        return data.filter(item=>item.status === category).filter(item => {
+        return data.filter(item => item.status === category).filter(item => {
             const itemDate = new Date(item.date).getTime(); // assuming each investment has a `date` field
             return itemDate >= fromTime && itemDate <= toTime;
         });
@@ -82,7 +91,7 @@ const ReportGenerator: React.FC = () => {
             body: sortedData.map((item, idx) => [
                 idx + 1,
                 item.amount != null ? `${item.amount}` : "N/A",
-                item.toInvestment || "N/A",
+                item.toinvestment || "N/A",
                 item.reason ?? "N/A",
                 item.date ? new Date(item.date).toLocaleDateString("en-GB") : "N/A"
             ]),
@@ -104,7 +113,7 @@ const ReportGenerator: React.FC = () => {
         const formattedData = sortedData.map((item, idx) => ({
             ID: idx + 1,
             Amount: item.amount != null ? ` ${item.amount}` : "N/A",
-            ToInvestment: item.toInvestment || item.title || "N/A",
+            ToInvestment: item.toinvestment || item.title || "N/A",
             Reason: item.reason ?? "N/A",
             Date: item.date
                 ? new Date(item.date).toLocaleDateString("en-GB") // dd/mm/yyyy
@@ -133,7 +142,7 @@ const ReportGenerator: React.FC = () => {
         const formattedData = sortedData.map((item, idx) => ({
             ID: idx + 1,
             Amount: item.amount != null ? ` ${item.amount}` : "N/A",
-            ToInvestment: item.toInvestment || item.title || "N/A",
+            ToInvestment: item.toinvestment || item.title || "N/A",
             Reason: item.reason ?? "N/A",
             Date: item.date
                 ? new Date(item.date).toLocaleDateString("en-GB")
@@ -201,7 +210,7 @@ const ReportGenerator: React.FC = () => {
                     <h2>Generate Report</h2>
 
                     <div className="form-group">
-                        <label>Select Report Type</label>
+                        <label className="labelfield">Select Report Type</label>
                         <select value={reportType} onChange={(e) => setReportType(e.target.value)}>
                             <option >Sales Report</option>
                             <option>Inventory Report</option>
@@ -210,7 +219,7 @@ const ReportGenerator: React.FC = () => {
                     </div>
 
                     <div className="form-group">
-                        <label>Select Status</label>
+                        <label className="labelfield">Select Status</label>
                         <select value={category} onChange={(e) => setCategory(e.target.value)}>
                             <option>pending</option>
                             <option>completed</option>
@@ -218,7 +227,7 @@ const ReportGenerator: React.FC = () => {
                     </div>
 
                     <div className="form-group">
-                        <label>Select Format</label>
+                        <label className="labelfield">Select Format</label>
                         <select value={format} onChange={(e) => setFormat(e.target.value)}>
                             <option>PDF</option>
                             <option>Excel</option>
@@ -226,9 +235,9 @@ const ReportGenerator: React.FC = () => {
                         </select>
                     </div>
 
-                    <div className="form-group date-range">
+                    <div className="form-groupreport date-range">
                         <div className="date-field">
-                            <label>From Date</label>
+                            <label className="labelfield">From Date</label>
                             <input
                                 type="date"
                                 value={fromDate}
@@ -237,7 +246,7 @@ const ReportGenerator: React.FC = () => {
                         </div>
 
                         <div className="date-field">
-                            <label>To Date</label>
+                            <label className="labelfield">To Date</label>
                             <input
                                 type="date"
                                 value={toDate}
